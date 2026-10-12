@@ -1,5 +1,6 @@
 ---
 import Habla from "../components/HablaModal.astro";
+const base = `${import.meta.env.BASE_URL}/`;
 ---
 <!DOCTYPE html>
 <html lang="es">
@@ -65,8 +66,8 @@ footer{border-top:2px solid var(--dorado);padding:1.6rem;text-align:center;opaci
 <body>
 <div class="pattern-bg"></div>
 <nav><div class="nav-inner">
-<div class="logo"><div class="sello">師</div><a href="/curso" style="text-decoration:none;color:inherit">← Curso</a><span>· CHIC 🐲</span></div>
-<div class="nav-links"><a href="/chia">CHIA 🌱</a><a href="/chib">CHIB 🔥</a><button id="btn-lang">👁 Ver en ES</button></div>
+<div class="logo"><div class="sello">師</div><a href={`${base}curso/`} style="text-decoration:none;color:inherit">← Curso</a><span>· CHIC 🐲</span></div>
+<div class="nav-links"><a href={`${base}chia/`}>CHIA 🌱</a><a href={`${base}chib/`}>CHIB 🔥</a><button id="btn-lang">👁 Ver en ES</button></div>
 </div></nav>
 <div class="wrap">
 <header class="hero">
@@ -128,10 +129,10 @@ footer{border-top:2px solid var(--dorado);padding:1.6rem;text-align:center;opaci
 <div class="card" style="background:rgba(193,39,45,.15)"><h3>🐉 Piensa en Rojo</h3><p class="t" data-es="Apertura sugerida: ¿por qué Chi es importante? ¿Qué hace la gente en tu casa?">libre1</p></div>
 <div class="card" style="background:rgba(212,175,55,.15)"><h3>🐅 Piensa en Dorado</h3><p class="t" data-es="Apertura sugerida: cuéntale un sueño, pregunta por su familia, dilo con expresión.">libre2</p></div>
 </div>
-<div class="examen"><strong class="t" data-es="EXAMEN FINAL: diálogo de 2 minutos con otro en Chi. Sin papel. Con chiis y chion y con expresión. Si lo logras, ya eres Maestro Chi. 🐲">examen</strong><br/><br/><a class="btn btn-d" href="/curso">Volver al Curso 🎓</a> <a class="btn btn-g" href="/chib">← CHIB</a></div>
+<div class="examen"><strong class="t" data-es="EXAMEN FINAL: diálogo de 2 minutos con otro en Chi. Sin papel. Con chiis y chion y con expresión. Si lo logras, ya eres Maestro Chi. 🐲">examen</strong><br/><br/><a class="btn btn-d" href={`${base}curso/`}>Volver al Curso 🎓</a> <a class="btn btn-g" href={`${base}chib/`}>← CHIB</a></div>
 </div></section>
 </div>
-<footer>🐲 CHIC · Maestro Chi · Sí = chiis · No = chion · <a href="/curso" style="color:inherit">Curso</a></footer>
+<footer>🐲 CHIC · Maestro Chi · Sí = chiis · No = chion · <a href={`${base}curso/`} style="color:inherit">Curso</a></footer>
 <script>
 const VOC="aeiouáéíóúüAEIOUÁÉÍÓÚÜ";const esV=c=>VOC.includes(c);const esF=c=>"áéíóúÁÉÍÓÚ".includes(c);
 function dividirSilabas(p){if(!p)return[];const w=p,n=w.length;let idx=[];for(let i=0;i<n;i++)if(esV(w[i]))idx.push(i);if(idx.length===0)return[w];if(idx.length===1)return[w];let cortes=[];for(let k=0;k<idx.length-1;k++){const v1=idx[k],v2=idx[k+1],entre=w.slice(v1+1,v2),c=entre.length;if(c===0){const a=w[v1].toLowerCase(),b=w[v2].toLowerCase(),deb=new Set(['i','u','ü']);const dip=(deb.has(a)||deb.has(b))&&!esF(w[v1])&&!esF(w[v2]);if(!dip)cortes.push(v2);}else if(c===1)cortes.push(v1+1);else if(c===2){const cc=entre.toLowerCase(),g=['br','cr','dr','fr','gr','pr','tr','bl','cl','dl','fl','gl','pl','tl','ch','ll','rr','qu','gu'];cortes.push(g.includes(cc)?v1+1:v1+2);}else if(c===3){const u2=entre.slice(1).toLowerCase(),g=['br','cr','dr','fr','gr','pr','tr','bl','cl','fl','gl','pl','tr'];cortes.push(g.includes(u2)?v1+2:v1+3);}else cortes.push(v1+c-1);}let s=[],ini=0;for(const co of cortes){if(co>0&&co<n){s.push(w.slice(ini,co));ini=co;}}s.push(w.slice(ini));return s.filter(Boolean);}

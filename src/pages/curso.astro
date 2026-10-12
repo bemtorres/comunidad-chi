@@ -1,5 +1,6 @@
 ---
 import Habla from "../components/HablaModal.astro";
+const base = `${import.meta.env.BASE_URL}/`;
 ---
 <!DOCTYPE html>
 <html lang="es">
@@ -58,8 +59,8 @@ footer{border-top:2px solid var(--dorado);padding:2rem;text-align:center;opacity
 <body>
 <div class="pattern-bg"></div>
 <nav><div class="nav-inner">
-<div class="logo"><div class="sello">气</div><a href="/" style="text-decoration:none">COMUNIDAD CHI</a></div>
-<div class="nav-links"><a href="/">🏠 Inicio</a><a href="/curso">🎓 Curso</a><a href="/chia" style="background:#2e7d32;color:#fff;padding:.3rem .8rem;border-radius:999px;font-weight:800">CHIA</a><a href="/chib" style="background:#8a5a00;color:#fff;padding:.3rem .8rem;border-radius:999px;font-weight:800">CHIB</a><a href="/chic" style="background:var(--rojo-b);color:#fff;padding:.3rem .8rem;border-radius:999px;font-weight:800">CHIC</a></div>
+<div class="logo"><div class="sello">气</div><a href={base} style="text-decoration:none">COMUNIDAD CHI</a></div>
+<div class="nav-links"><a href={base}>🏠 Inicio</a><a href={`${base}curso/`}>🎓 Curso</a><a href={`${base}chia/`} style="background:#2e7d32;color:#fff;padding:.3rem .8rem;border-radius:999px;font-weight:800">CHIA</a><a href={`${base}chib/`} style="background:#8a5a00;color:#fff;padding:.3rem .8rem;border-radius:999px;font-weight:800">CHIB</a><a href={`${base}chic/`} style="background:var(--rojo-b);color:#fff;padding:.3rem .8rem;border-radius:999px;font-weight:800">CHIC</a></div>
 </div></nav>
 <div class="wrap">
 <header class="hero">
@@ -73,9 +74,9 @@ footer{border-top:2px solid var(--dorado);padding:2rem;text-align:center;opacity
 <h2>🗺️ El camino <em>路线图</em></h2>
 <div class="linea"></div>
 <div class="niveles">
-<div class="nivel a"><div>🌱 NIVEL 1 · 初级</div><div class="big">CHIA</div><p><strong>El Despertar del Chi</strong><br/>Para los que empiezan desde cero.</p><ul><li>📜 Historia: el secreto de los abuelos</li><li>🔤 Sílabas de 1-2 + chiis / chion</li><li>💬 10 frases + cuento corto</li><li>👋 Mini-diálogo: saludar</li><li>✅ Examen: presentarte en Chi</li></ul><a class="btn btn-d" href="/chia">Entrar a CHIA 🌱</a></div>
-<div class="nivel b"><div>🔥 NIVEL 2 · 中级</div><div class="big">CHIB</div><p><strong>La Senda del Dragón</strong><br/>Para conversar todos los días.</p><ul><li>📜 Historia: el Chi sale a la calle</li><li>🔤 Palabras de 3-4 sílabas</li><li>💬 Emociones, comida, familia</li><li>📖 Cuento + diálogo en el mercado</li><li>✅ Examen: contar tu día en Chi</li></ul><a class="btn btn-d" href="/chib">Entrar a CHIB 🔥</a></div>
-<div class="nivel c"><div>🐲 NIVEL 3 · 高级</div><div class="big">CHIC</div><p><strong>Maestro Chi</strong><br/>Para dialogar con otro sin frenarte.</p><ul><li>📜 Historia: filosofía del maestro</li><li>🔤 Fluidez + trabalenguas</li><li>💬 Debate + contar cuentos propios</li><li>⚔️ Gran diálogo libre de 2 maestros</li><li>✅ Examen final: diálogo 2 min</li></ul><a class="btn btn-d" href="/chic">Entrar a CHIC 🐲</a></div>
+<div class="nivel a"><div>🌱 NIVEL 1 · 初级</div><div class="big">CHIA</div><p><strong>El Despertar del Chi</strong><br/>Para los que empiezan desde cero.</p><ul><li>📜 Historia: el secreto de los abuelos</li><li>🔤 Sílabas de 1-2 + chiis / chion</li><li>💬 10 frases + cuento corto</li><li>👋 Mini-diálogo: saludar</li><li>✅ Examen: presentarte en Chi</li></ul><a class="btn btn-d" href={`${base}chia/`}>Entrar a CHIA 🌱</a></div>
+<div class="nivel b"><div>🔥 NIVEL 2 · 中级</div><div class="big">CHIB</div><p><strong>La Senda del Dragón</strong><br/>Para conversar todos los días.</p><ul><li>📜 Historia: el Chi sale a la calle</li><li>🔤 Palabras de 3-4 sílabas</li><li>💬 Emociones, comida, familia</li><li>📖 Cuento + diálogo en el mercado</li><li>✅ Examen: contar tu día en Chi</li></ul><a class="btn btn-d" href={`${base}chib/`}>Entrar a CHIB 🔥</a></div>
+<div class="nivel c"><div>🐲 NIVEL 3 · 高级</div><div class="big">CHIC</div><p><strong>Maestro Chi</strong><br/>Para dialogar con otro sin frenarte.</p><ul><li>📜 Historia: filosofía del maestro</li><li>🔤 Fluidez + trabalenguas</li><li>💬 Debate + contar cuentos propios</li><li>⚔️ Gran diálogo libre de 2 maestros</li><li>✅ Examen final: diálogo 2 min</li></ul><a class="btn btn-d" href={`${base}chic/`}>Entrar a CHIC 🐲</a></div>
 </div>
 </section>
 

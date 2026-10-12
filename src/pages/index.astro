@@ -2,6 +2,8 @@
 import { espanolAChi, desgloseChi } from "../lib/chi";
 import Habla from "../components/HablaModal.astro";
 
+const base = `${import.meta.env.BASE_URL}/`;
+
 type Expr = { cat: string; es: string; gesto: string };
 
 const baseExprs: Expr[] = [
@@ -327,7 +329,7 @@ const categorias = ["Todas", ...new Set(expresiones.map((e) => e.cat))];
       <a href="#sagradas">Chiis y Chion</a>
       <a href="#expresiones">Expresiones</a>
       <a href="#traductor">Traductor</a>
-      <a href="/curso" style="background:var(--dorado);color:#2b1510;padding:.3rem .8rem;border-radius:999px;font-weight:800">🎓 Curso</a>
+      <a href={`${base}curso/`} style="background:var(--dorado);color:#2b1510;padding:.3rem .8rem;border-radius:999px;font-weight:800">🎓 Curso</a>
     </div>
   </div>
 </nav>
@@ -471,7 +473,7 @@ const categorias = ["Todas", ...new Set(expresiones.map((e) => e.cat))];
           <span class="cat">{e.cat}</span>
           <div class="es">{e.es}</div>
           <div class="ch">{e.chi}</div>
-        {/* <div class="des">🔍 {e.des}</div>*/}
+          <div class="des">🔍 {e.des}</div>
           <div class="gesto">🎭 {e.gesto}</div>
           <button class="say" data-tx={e.chi}>🔊 Escuchar</button>
         </article>

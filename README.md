@@ -22,7 +22,7 @@ La página `/curso` presenta el recorrido propuesto de tres niveles:
 | **CHIB — La Senda del Dragón** | Conversación diaria, emociones, comida, familia y mercado | Conversar sobre lo cotidiano |
 | **CHIC — Maestro Chi** | Fluidez, debate, cuentos propios y diálogo libre | Conversar con fluidez |
 
-**Estado actual:** están implementadas la página de inicio (`/`), la propuesta del curso (`/curso`) y la primera lección (`/chia`). Las páginas de los niveles CHIB y CHIC todavía no están implementadas.
+**Estado actual:** están implementadas la página de inicio, la propuesta del curso y las lecciones de CHIA, CHIB y CHIC.
 
 ## Empezar en local
 
@@ -42,11 +42,18 @@ npm run build
 npm run preview
 ```
 
+## Publicar en GitHub Pages
+
+El repositorio está configurado para publicar en [https://bemtorres.github.io/comunidad-chi/](https://bemtorres.github.io/comunidad-chi/). Al hacer `push` a `main`, la acción de GitHub en `.github/workflows/deploy.yml` compila el sitio y lo despliega automáticamente.
+
+En GitHub, configura **Settings → Pages → Build and deployment → Source → GitHub Actions**. También puedes iniciar el despliegue manualmente desde la pestaña **Actions**, ejecutando **Deploy to GitHub Pages**.
+
 ## Tecnologías
 
 - [Astro](https://astro.build/) 5
 - HTML, CSS y JavaScript
 - Fuentes web de Google Fonts
+- GitHub Actions para el despliegue en GitHub Pages
 
 ## Estructura
 
@@ -55,5 +62,7 @@ src/
 └── pages/
     ├── index.astro    # Página de inicio y traductor
     ├── curso.astro    # Propuesta del recorrido CHIA, CHIB y CHIC
-    └── chia.astro     # Lección del nivel inicial
+    ├── chia.astro     # Lección CHIA
+    ├── chib.astro     # Lección CHIB
+    └── chic.astro     # Lección CHIC
 ```
