@@ -44,9 +44,9 @@ npm run preview
 
 ## Publicar en GitHub Pages
 
-El repositorio está configurado para publicar en [https://bemtorres.github.io/comunidad-chi/](https://bemtorres.github.io/comunidad-chi/). Al hacer `push` a `main`, la acción de GitHub en `.github/workflows/deploy.yml` compila el sitio y lo despliega automáticamente.
+El sitio se publica en [https://chihochila.datoschile.help](https://chihochila.datoschile.help). El archivo `public/CNAME` configura el dominio personalizado y, al hacer `push` a `main`, la acción de GitHub en `.github/workflows/deploy.yml` compila y despliega el sitio automáticamente.
 
-En GitHub, configura **Settings → Pages → Build and deployment → Source → GitHub Actions**. También puedes iniciar el despliegue manualmente desde la pestaña **Actions**, ejecutando **Deploy to GitHub Pages**.
+En GitHub, configura **Settings → Pages → Build and deployment → Source → GitHub Actions**. El dominio también debe apuntar mediante DNS a GitHub Pages. Puedes iniciar un despliegue manual desde **Actions → Deploy to GitHub Pages**.
 
 ## Tecnologías
 

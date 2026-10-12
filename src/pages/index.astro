@@ -2,7 +2,7 @@
 import { espanolAChi, desgloseChi } from "../lib/chi";
 import Habla from "../components/HablaModal.astro";
 
-const base = `${import.meta.env.BASE_URL}/`;
+const base = import.meta.env.BASE_URL;
 
 type Expr = { cat: string; es: string; gesto: string };
 
