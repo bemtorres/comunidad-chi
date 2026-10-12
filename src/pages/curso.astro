@@ -1,0 +1,107 @@
+---
+---
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Curso Chi 🎓 — Niveles CHIA, CHIB, CHIC</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Outfit:wght@300;400;600;700;800&family=Noto+Serif+SC:wght@600;900&display=swap" rel="stylesheet" />
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎓</text></svg>" />
+<style>
+:root{--rojo:#a31616;--rojo-b:#c1272d;--dorado:#d4af37;--dorado-c:#f9e076;--crema:#fff8e7;--papel:#fdf3d8;--tinta:#2b1510;--negro:#160808}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;font-family:'Outfit',system-ui,sans-serif;background:var(--negro);color:var(--crema)}
+.pattern-bg{position:fixed;inset:0;z-index:-2;background:radial-gradient(circle at 20% 20%,#7a1212 0%,transparent 40%),linear-gradient(180deg,#1e0808,#2e0d0d 50%,#160808)}
+.pattern-bg::after{content:"";position:absolute;inset:0;opacity:.08;background-image:repeating-linear-gradient(45deg,var(--dorado) 0 2px,transparent 2px 28px),repeating-linear-gradient(-45deg,var(--dorado) 0 2px,transparent 2px 28px)}
+nav{position:sticky;top:0;z-index:50;backdrop-filter:blur(12px);background:rgba(22,8,8,.9);border-bottom:2px solid var(--dorado)}
+.nav-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:.8rem 1.2rem}
+.logo{display:flex;align-items:center;gap:.7rem;font-weight:800}
+.sello{width:46px;height:46px;background:var(--rojo-b);display:grid;place-items:center;border-radius:8px;font-family:'Ma Shan Zheng',serif;font-size:1.8rem;border:2px solid var(--dorado);transform:rotate(-4deg)}
+.nav-links{display:flex;gap:.7rem;font-size:.92rem;align-items:center;flex-wrap:wrap}
+.nav-links a{text-decoration:none;opacity:.9;color:inherit}
+.nav-links a:hover{color:var(--dorado-c)}
+.wrap{max-width:1100px;margin:0 auto;padding:0 1.2rem}
+.hero{text-align:center;padding:3.5rem 1.2rem 1.5rem}
+h1{font-family:'Ma Shan Zheng',serif;font-size:clamp(2.6rem,7vw,5rem);margin:.6rem 0;text-shadow:0 4px 0 #000}
+h1 span{color:var(--dorado-c)}
+.etiqueta{display:inline-block;border:1px solid var(--dorado);border-radius:999px;padding:.4rem 1rem;font-size:.82rem;letter-spacing:.18em;color:var(--dorado-c);background:rgba(212,175,55,.1)}
+.lead{max-width:720px;margin:0 auto;line-height:1.7;opacity:.92}
+section{padding:2.4rem 0}
+h2{font-family:'Ma Shan Zheng',serif;font-size:clamp(1.9rem,4vw,2.8rem);margin:0;font-weight:400}
+h2 em{color:var(--dorado-c);font-style:normal}
+.linea{height:2px;background:linear-gradient(90deg,transparent,var(--dorado),transparent);margin:1rem 0 1.6rem}
+.niveles{display:grid;grid-template-columns:repeat(3,1fr);gap:1.1rem}
+@media(max-width:860px){.niveles{grid-template-columns:1fr}}
+.nivel{border-radius:20px;padding:1.5rem;border:3px solid var(--dorado);position:relative;overflow:hidden}
+.nivel.a{background:linear-gradient(180deg,#1c5c2a,#0f3318);color:#eaffea}
+.nivel.b{background:linear-gradient(180deg,#8a5a00,#4a2f00);color:#fff6d8}
+.nivel.c{background:linear-gradient(180deg,#7a1212,#2e0d0d);color:#ffe9e9}
+.nivel .big{font-family:'Ma Shan Zheng',serif;font-size:3.2rem;line-height:1}
+.nivel ul{line-height:1.9;font-size:.95rem;padding-left:1.1rem}
+.btn{border:none;border-radius:999px;padding:.8rem 1.4rem;font-weight:800;font-size:1rem;cursor:pointer;font-family:inherit;display:inline-block;text-decoration:none}
+.btn-d{background:var(--dorado);color:#2b1510}
+.btn-d:hover{background:var(--dorado-c)}
+.btn-r{background:var(--rojo-b);color:#fff}
+.card{background:rgba(255,248,231,.06);border:1px solid rgba(212,175,55,.4);border-radius:18px;padding:1.3rem}
+.card.papel{background:linear-gradient(180deg,var(--papel),#f6e6b3);color:var(--tinta);border:3px solid var(--dorado)}
+.tabla{width:100%;border-collapse:collapse;font-size:.95rem;background:#fffdf2;color:var(--tinta);border-radius:14px;overflow:hidden}
+.tabla th{background:var(--rojo-b);color:#fff;padding:.7rem;text-align:left}
+.tabla td{padding:.7rem;border-bottom:1px solid #e5d29a;vertical-align:top}
+.paso{display:flex;gap:.8rem;margin:.7rem 0}
+.bola{min-width:34px;height:34px;border-radius:50%;background:var(--dorado);color:#2b1510;display:grid;place-items:center;font-weight:800}
+footer{border-top:2px solid var(--dorado);padding:2rem;text-align:center;opacity:.85;background:rgba(0,0,0,.4)}
+</style>
+</head>
+<body>
+<div class="pattern-bg"></div>
+<nav><div class="nav-inner">
+<div class="logo"><div class="sello">气</div><a href="/" style="text-decoration:none">COMUNIDAD CHI</a></div>
+<div class="nav-links"><a href="/">🏠 Inicio</a><a href="/curso">🎓 Curso</a><a href="/chia" style="background:#2e7d32;color:#fff;padding:.3rem .8rem;border-radius:999px;font-weight:800">CHIA</a><a href="/chib" style="background:#8a5a00;color:#fff;padding:.3rem .8rem;border-radius:999px;font-weight:800">CHIB</a><a href="/chic" style="background:var(--rojo-b);color:#fff;padding:.3rem .8rem;border-radius:999px;font-weight:800">CHIC</a></div>
+</div></nav>
+<div class="wrap">
+<header class="hero">
+<div style="font-size:2.4rem">🏮 🐉 🎓 🐲 🏮</div>
+<div class="etiqueta">🏯 PROPUESTA DE CURSO · 课程 🏯</div>
+<h1>Aprende Chi por <span>niveless</span><br/>CHIA · CHIB · CHIC</h1>
+<p class="lead">Un camino de 3 páginas-niveles. Cada nivel tiene su <strong>propia historia</strong>, <strong>frases</strong>, <strong>cuento en Chi</strong> y <strong>diálogo</strong>, hasta que puedas tener un diálogo con otro fluidamente. <br/><br/>⚠️ <strong>Regla del curso:</strong> dentro de cada nivel <u>todo está escrito en Chi</u> (ej: hola = chihochila, sí = chiis, no = chion). Arriba a la derecha hay un botón <strong>👁 ES / CHI</strong> para cambiar las instrucciones a español cuando te pierdas.</p>
+</header>
+
+<section>
+<h2>🗺️ El camino <em>路线图</em></h2>
+<div class="linea"></div>
+<div class="niveles">
+<div class="nivel a"><div>🌱 NIVEL 1 · 初级</div><div class="big">CHIA</div><p><strong>El Despertar del Chi</strong><br/>Para los que empiezan desde cero.</p><ul><li>📜 Historia: el secreto de los abuelos</li><li>🔤 Sílabas de 1-2 + chiis / chion</li><li>💬 10 frases + cuento corto</li><li>👋 Mini-diálogo: saludar</li><li>✅ Examen: presentarte en Chi</li></ul><a class="btn btn-d" href="/chia">Entrar a CHIA 🌱</a></div>
+<div class="nivel b"><div>🔥 NIVEL 2 · 中级</div><div class="big">CHIB</div><p><strong>La Senda del Dragón</strong><br/>Para conversar todos los días.</p><ul><li>📜 Historia: el Chi sale a la calle</li><li>🔤 Palabras de 3-4 sílabas</li><li>💬 Emociones, comida, familia</li><li>📖 Cuento + diálogo en el mercado</li><li>✅ Examen: contar tu día en Chi</li></ul><a class="btn btn-d" href="/chib">Entrar a CHIB 🔥</a></div>
+<div class="nivel c"><div>🐲 NIVEL 3 · 高级</div><div class="big">CHIC</div><p><strong>Maestro Chi</strong><br/>Para dialogar con otro sin frenarte.</p><ul><li>📜 Historia: filosofía del maestro</li><li>🔤 Fluidez + trabalenguas</li><li>💬 Debate + contar cuentos propios</li><li>⚔️ Gran diálogo libre de 2 maestros</li><li>✅ Examen final: diálogo 2 min</li></ul><a class="btn btn-d" href="/chic">Entrar a CHIC 🐲</a></div>
+</div>
+</section>
+
+<section>
+<h2>📊 Propuesta <em>contenidos por nivel</em></h2>
+<div class="linea"></div>
+<div style="overflow-x:auto"><table class="tabla">
+<tr><th></th><th>🌱 CHIA</th><th>🔥 CHIB</th><th>🐲 CHIC</th></tr>
+<tr><td><strong>Historia</strong></td><td>El secreto de los abuelos. Por qué se inventó.</td><td>El Chi sale a la calle y al mercado.</td><td>Filosofía del maestro. Transmitir a los hijos.</td></tr>
+<tr><td><strong>Frases</strong></td><td>10 saludos cortos. Hola, gracias, sí/no.</td><td>20 frases de vida diaria: comer, jugar, sentir.</td><td>Opinar, discutir, bromear y contar historias.</td></tr>
+<tr><td><strong>Cuento</strong></td><td>“El pequeño dragón Chiho” (5 líneas).</td><td>“La fiesta de la familia Chi” (10 líneas).</td><td>“Los dos maestros” + crea tu propio cuento.</td></tr>
+<tr><td><strong>Diálogo</strong></td><td>Saludar a otro (4 turnos).</td><td>Comprar en el mercado (10 turnos).</td><td>Diálogo libre entre dos (sin guion).</td></tr>
+<tr><td><strong>Meta</strong></td><td>Presentarte.</td><td>Conversar lo cotidiano.</td><td>Dialogar con otro fluidamente.</td></tr>
+</table></div>
+</section>
+
+<section>
+<h2>🎭 ¿Cómo se estudia? <em>学习方法</em></h2>
+<div class="linea"></div>
+<div class="card papel">
+<div class="paso"><div class="bola">1</div><div><strong>Todo en Chi.</strong> Entras a CHIA, CHIB o CHIC y todo lo ves en Chi (chihochila, chigrachicias, chiis, chion...). Así tu ojo y oído se acostumbran.</div></div>
+<div class="paso"><div class="bola">2</div><div><strong>Botón ES en la esquina superior.</strong> Si no entiendes, toca <strong>👁 Ver en ES</strong> arriba a la derecha. Las instrucciones cambian a español. Tócalo otra vez para volver a Chi.</div></div>
+<div class="paso"><div class="bola">3</div><div><strong>Escucha y repite con expresión.</strong> Cada frase y cuento tiene 🔊. Repite con gestos: 🙏 para chiis, 👊 para chion, 🐉 cantado para lo demás.</div></div>
+<div class="paso"><div class="bola">4</div><div><strong>Pasa el examen para subir.</strong> CHIA → sabes saludar. CHIB → cuentas tu día. CHIC → dialogas 2 minutos con otro sin ayuda.</div></div>
+</div>
+</section>
+</div>
+<footer>🐉 Comunidad Chi 气 — Curso CHIA · CHIB · CHIC · Hola = chihochila · Sí = chiis · No = chion 🐲</footer>
+</body>
+</html>
