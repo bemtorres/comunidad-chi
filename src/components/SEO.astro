@@ -1,0 +1,49 @@
+---
+const SITE = "https://www.chihochila.com";
+
+const {
+  title,
+  description,
+  path = "/",
+  keywords = "aprender chi, curso chi gratis, chi free, aprender chi online, idioma chi, chihochila",
+  image = "/og.png",
+  imageAlt = "chihochila.com — Aprende chi gratis",
+  type = "website",
+  jsonLd = [],
+} = Astro.props;
+
+const canonical = new URL(path, SITE).href;
+const absImage = new URL(image, SITE).href;
+const schemas = (Array.isArray(jsonLd) ? jsonLd : [jsonLd]).filter(Boolean);
+---
+
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>{title}</title>
+<meta name="description" content={description} />
+<meta name="keywords" content={keywords} />
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
+<meta name="author" content="Comunidad Chi · chihochila.com" />
+<link rel="canonical" href={canonical} />
+<meta name="theme-color" content="#a31616" />
+<link rel="icon" type="image/png" sizes="64x64" href="/favicon.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+
+<meta property="og:type" content={type} />
+<meta property="og:site_name" content="chihochila.com" />
+<meta property="og:locale" content="es_ES" />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={canonical} />
+<meta property="og:image" content={absImage} />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content={imageAlt} />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={absImage} />
+<meta name="twitter:image:alt" content={imageAlt} />
+
+{schemas.map((s) => <script type="application/ld+json" is:inline set:html={JSON.stringify(s)} />)}

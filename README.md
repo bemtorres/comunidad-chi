@@ -44,9 +44,17 @@ npm run preview
 
 ## Publicar en GitHub Pages
 
-El sitio se publica en [https://chihochila.datoschile.help](https://chihochila.datoschile.help). El archivo `public/CNAME` configura el dominio personalizado y, al hacer `push` a `main`, la acción de GitHub en `.github/workflows/deploy.yml` compila y despliega el sitio automáticamente.
+El sitio se publica en [https://www.chihochila.com](https://www.chihochila.com). El archivo `public/CNAME` configura el dominio personalizado y, al hacer `push` a `main`, la acción de GitHub en `.github/workflows/deploy.yml` compila y despliega el sitio automáticamente.
 
-En GitHub, configura **Settings → Pages → Build and deployment → Source → GitHub Actions**. El dominio también debe apuntar mediante DNS a GitHub Pages. Puedes iniciar un despliegue manual desde **Actions → Deploy to GitHub Pages**.
+En GitHub, configura **Settings → Pages → Build and deployment → Source → GitHub Actions**. El dominio también debe apuntar mediante DNS (`CNAME` → `www`) a GitHub Pages. Puedes iniciar un despliegue manual desde **Actions → Deploy to GitHub Pages**.
+
+## SEO
+
+- `src/components/SEO.astro`: title, meta description, keywords, canonical, Open Graph, Twitter Card, favicon y datos estructurados JSON-LD por página.
+- Datos estructurados: `WebSite`, `Organization`, `FAQPage` (inicio), `Course` + `BreadcrumbList` (`/curso/`) y `LearningResource` por nivel (CHIA/CHIB/CHIC).
+- `public/robots.txt` y `public/sitemap.xml` apuntando a `https://www.chihochila.com`.
+- Imagen social `public/og.png` (1200×630), `favicon.png` y `apple-touch-icon.png`.
+- Contenido clave: *aprender chi gratis*, *curso de chi online*, *chi free*, *chihochila*, *chiis*, *chion*.
 
 ## Tecnologías
 

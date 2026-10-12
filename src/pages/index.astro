@@ -1,6 +1,7 @@
 ---
 import { espanolAChi, desgloseChi } from "../lib/chi";
 import Habla from "../components/HablaModal.astro";
+import SEO from "../components/SEO.astro";
 
 const base = import.meta.env.BASE_URL;
 
@@ -52,19 +53,77 @@ const expresiones = baseExprs.map((e) => ({
 }));
 
 const categorias = ["Todas", ...new Set(expresiones.map((e) => e.cat))];
+
+const faqs = [
+  {
+    q: "¿Qué es el chi y cómo se aprende?",
+    a: "El chi (chihochila) es un idioma de juego en español: se antepone la sílaba chi a cada sílaba. Hola = chihochila, gracias = chigrachicias, amigo = chiachimichigo. Se aprende gratis con el curso online CHIA, CHIB y CHIC, con lecciones, frases, cuentos, diálogos y exámenes.",
+  },
+  {
+    q: "¿El curso de chi es gratis (chi free)?",
+    a: "Sí. Todo el curso de chi es 100% gratis y sin registro: lecciones, expresiones del día a día, traductor chi-español, voz para escuchar y los tres niveles CHIA, CHIB y CHIC.",
+  },
+  {
+    q: "¿Cuánto se tarda en aprender chi?",
+    a: "Con 15 minutos al día, en una semana ya te presentas en chi (nivel CHIA) y en un mes conversas sobre tu día (nivel CHIB). El nivel CHIC es para dialogar con otro sin frenarte, con trabalenguas y debate.",
+  },
+  {
+    q: "¿Qué significan chiis y chion?",
+    a: "chiis [chīís] significa SÍ y chion [chiǒn] significa NO. Son las dos palabras sagradas: no siguen la regla de chi + sílaba y se dicen con expresión — chiis con reverencia y voz larga, chion con brazos cruzados y voz seca.",
+  },
+  {
+    q: "¿Hay traductor de chi a español?",
+    a: "Sí, gratis y online. Escribe en español y obtén chi, o escribe en chi y lo traduce a español: muestra las sílabas, el desglose palabra por palabra, copia al portapapeles y lee en voz alta con distintas voces.",
+  },
+  {
+    q: "¿Qué significa chihochila?",
+    a: "Chihochila es la traducción de hola: ho - la ➜ chiho - chila. Es la primera palabra de toda conversación en chi, junto con chiis (sí) y chion (no).",
+  },
+];
+
+const jsonLd = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: "Comunidad Chi · chihochila.com",
+    url: "https://www.chihochila.com/",
+    inLanguage: "es",
+    description:
+      "Aprende chi gratis: curso online CHIA, CHIB y CHIC, traductor chi-español, expresiones y voz.",
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name: "Comunidad Chi",
+    url: "https://www.chihochila.com/",
+    logo: "https://www.chihochila.com/og.png",
+    slogan: "Aprende chi gratis · Curso chi free",
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faqs.map((f) => ({
+      "@type": "Question",
+      name: f.q,
+      acceptedAnswer: { "@type": "Answer", text: f.a },
+    })),
+  },
+];
 ---
 
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Comunidad Chi 气 — El idioma secreto del Chi</title>
-<meta name="description" content="Descubre el Chi: el juego de palabras transmitido de generación en generación. Pon chi antes de cada sílaba. Hola = chihochila. Sí = chiis, No = chion." />
+<SEO
+  title="Aprende chi gratis · Curso online de chi | chihochila.com"
+  description="Aprende chi gratis con el curso online CHIA, CHIB y CHIC: lecciones, expresiones, traductor chi-español y voz. Habla chihochila desde cero. Curso chi 100% free, sin registro."
+  path="/"
+  keywords="aprender chi, curso chi gratis, chi free, aprender chi online, curso de chi, idioma chi, chihochila, chiis, chion, traductor chi, aprender chihochila"
+  jsonLd={jsonLd}
+/>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Outfit:wght@300;400;600;700;800&family=Noto+Serif+SC:wght@600;900&display=swap" rel="stylesheet" />
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏮</text></svg>" />
 <style>
   :root{
     --rojo-oscuro:#5c0a0a;
@@ -216,6 +275,18 @@ const categorias = ["Todas", ...new Set(expresiones.map((e) => e.cat))];
   }
   .card.papel{background:linear-gradient(180deg,var(--papel),#f6e6b3);color:var(--tinta);border:3px solid var(--dorado)}
   .card h3{margin:.2rem 0 .6rem;font-size:1.25rem}
+  details.faq{padding:0}
+  details.faq summary{
+    cursor:pointer;list-style:none;padding:1.15rem 1.3rem;
+    font-weight:800;color:var(--dorado-claro);font-size:1.02rem;
+    display:flex;justify-content:space-between;gap:.8rem;align-items:center;
+  }
+  details.faq summary::-webkit-details-marker{display:none}
+  details.faq summary::after{content:"➕";color:var(--dorado);font-weight:800}
+  details.faq[open]{background:rgba(255,248,231,.12)}
+  details.faq[open] summary{border-bottom:1px solid rgba(212,175,55,.35)}
+  details.faq[open] summary::after{content:"➖"}
+  details.faq p{margin:.9rem 1.3rem 1.3rem;line-height:1.75;opacity:.92}
   .paso{display:flex;gap:.9rem;margin:.9rem 0}
   .paso-bola{min-width:38px;height:38px;border-radius:50%;background:var(--dorado);color:#2b1510;display:grid;place-items:center;font-weight:800}
   code.chicode{background:#2b1510;color:var(--dorado-claro);padding:.15rem .5rem;border-radius:6px;font-size:.95em}
@@ -339,12 +410,15 @@ const categorias = ["Todas", ...new Set(expresiones.map((e) => e.cat))];
   <header class="hero">
     <div class="lanterns"><span class="lantern">🏮</span><span class="lantern">🏮</span><span class="lantern">🏮</span><span class="lantern">🏮</span><span class="lantern">🏮</span></div>
     <div class="etiqueta">🏯 传承 · Transmitido de generación en generación 🏯</div>
-    <h1>Habla en <span>Chi</span> <br/> 氣 Chihochila</h1>
+    <h1>Aprende <span>chi</span> gratis<br/>Habla en Chihochila 🀄</h1>
     <div class="hanzi-deco">龍鳳呈祥 • 氣 • 語言</div>
     <p class="sub">
       Este es un proyecto que conocí desde pequeño, pasado de generación en generación:
       <strong>la forma secreta de hablar con <em style="color:var(--dorado-claro)">chi</em></strong>.
       Todo está en español, pero se pronuncia y se escribe poniendo un <strong>chi</strong> antes de cada sílaba.
+    </p>
+    <p class="sub" style="font-size:.9rem;opacity:.85;margin-top:.4rem">
+      🎁 <strong>Curso chi 100% gratis</strong> · Sin registro · 3 niveles · Lecciones, expresiones, traductor y voz · <em>chi free</em>
     </p>
 
     <div class="hero-card">
@@ -534,12 +608,42 @@ const categorias = ["Todas", ...new Set(expresiones.map((e) => e.cat))];
       <div class="card"><h3>⚔️ Reto final</h3><p>Traduce “Nos vemos mañana, dragón” y grítalo con reverencia. Si alguien te entiende sin traductor… ya eres de la comunidad. <button class="btn btn-dorado" style="margin-top:.6rem" onclick="document.getElementById('entrada').value='Nos vemos mañana, dragón';document.getElementById('btn-traducir').click();document.getElementById('traductor').scrollIntoView({behavior:'smooth'})">Probar reto 🐉</button></p></div>
     </div>
   </section>
+
+  <!-- FAQ · preguntas frecuentes (SEO) -->
+  <section id="faq">
+    <div class="titulo-seccion"><div class="num">問</div><h2>Preguntas frecuentes <em>常见问题</em></h2></div>
+    <p class="lead">Lo que más nos preguntan antes de <strong>aprender chi</strong> — respuestas cortas sobre el <strong>curso de chi gratis</strong>, las reglas y el traductor.</p>
+    <div class="linea-dorada"></div>
+    <div class="grid2">
+      {faqs.map((f) => (
+        <details class="card faq">
+          <summary>{f.q}</summary>
+          <p>{f.a}</p>
+        </details>
+      ))}
+    </div>
+    <div class="card papel" style="margin-top:1.2rem;text-align:center">
+      <h3>🎓 ¿Listo para aprender chi?</h3>
+      <p style="margin:.5rem 0 1rem">Entra al <strong>curso chi gratis</strong> y empieza hoy por CHIA: el nivel 1 para hablar desde cero.</p>
+      <a class="btn btn-rojo" href={`${base}curso/`} style="display:inline-block">Empezar curso gratis 🐉</a>
+      <a class="btn btn-dorado" href={`${base}chia/`} style="display:inline-block;margin-left:.6rem">Ir a CHIA 🌱</a>
+    </div>
+  </section>
 </div>
 
 <footer>
   <div class="drag">🐉 🏮 🐼 🏮 🐲</div>
   <p><strong>Comunidad Chi 气</strong> — Un idioma de juego, transmitido de generación en generación. • <em>Hola = chihochila • Sí = chiis [chīís] • No = chion [chiǒn]</em></p>
-  <p style="font-size:.85rem;opacity:.7">Hecho con ♥ al estilo chino. 龍年大吉 — Que el dragón te acompañe.</p>
+  <p style="font-size:.92rem">
+    <a href={base}>Inicio</a> ·
+    <a href={`${base}curso/`}>Curso chi gratis</a> ·
+    <a href={`${base}chia/`}>CHIA</a> ·
+    <a href={`${base}chib/`}>CHIB</a> ·
+    <a href={`${base}chic/`}>CHIC</a> ·
+    <a href="#traductor">Traductor chi</a> ·
+    <a href="#faq">Preguntas frecuentes</a>
+  </p>
+  <p style="font-size:.85rem;opacity:.7">www.chihochila.com — Hecho con ♥ al estilo chino. 龍年大吉 — Que el dragón te acompañe.</p>
 </footer>
 
 <script>
