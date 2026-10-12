@@ -74,7 +74,12 @@
       <option value="panda">🐼 Panda Chi</option>
       <option value="ninja">🥷 Ninja Chi</option>
       <option value="tigre">🐯 Tigre Chi</option>
-      <option value="sistema">🔊 Voz del sistema</option>
+      <option value="sistema">🧍 Chi Neutro</option>
+    </select>
+
+    <label for="voz-synth">Voz real 真实声音 <b id="voz-synth-n">…</b></label>
+    <select id="voz-synth">
+      <option value="">🔁 Automática (asiáticas primero)</option>
     </select>
 
     <label for="voz-vel">Velocidad 速度 <b id="voz-vel-val">1.00×</b></label>
@@ -90,47 +95,100 @@
       <button class="voz-reset" id="voz-reset">↺ Restablecer</button>
       <button class="voz-ok" id="voz-ok">✓ Listo</button>
     </div>
-    <small class="voz-note">Se guarda solo en tu dispositivo (localStorage).</small>
+    <small class="voz-note">Se guarda solo en tu dispositivo (localStorage). Lista completa de voces: consola (F12).</small>
   </div>
 </div>
 
 <script is:inline>
   (function () {
     var PERSONAJES = {
-      dragon:  { nombre: "🐉 Maestro Dragón", rate: 0.78, pitch: 0.55, voz: 0,
+      dragon:  { nombre: "🐉 Maestro Dragón", rate: 0.78, pitch: 0.55,
                  desc: "Grave y sabio. Habla lento, como un maestro de kung-fu dando una lección." },
-      abuela:  { nombre: "👵 Abuela Chi", rate: 0.95, pitch: 1.05, voz: 1,
+      abuela:  { nombre: "👵 Abuela Chi", rate: 0.95, pitch: 1.05,
                  desc: "Cálida y clara, ritmo normal. La que enseña el secreto a los nietos." },
-      panda:   { nombre: "🐼 Panda Chi", rate: 1.0, pitch: 1.7, voz: 2,
+      panda:   { nombre: "🐼 Panda Chi", rate: 1.0, pitch: 1.7,
                  desc: "Aguda y alegre, como un niño pequeño que recién aprendió a hablar en Chi." },
-      ninja:   { nombre: "🥷 Ninja Chi", rate: 1.3, pitch: 1.2, voz: 3,
+      ninja:   { nombre: "🥷 Ninja Chi", rate: 1.3, pitch: 1.2,
                  desc: "Rápida y sigilosa. Habla chistando, casi en secreto." },
-      tigre:   { nombre: "🐯 Tigre Chi", rate: 0.9, pitch: 0.3, voz: 4,
+      tigre:   { nombre: "🐯 Tigre Chi", rate: 0.9, pitch: 0.3,
                  desc: "Muy grave e imponente. Ideal para decir ¡chion! 👊" },
-      sistema: { nombre: "🔊 Voz del sistema", rate: 1, pitch: 1, voz: -1,
-                 desc: "La voz predeterminada de tu dispositivo, sin cambios." }
+      sistema: { nombre: "🧍 Chi Neutro", rate: 1, pitch: 1,
+                 desc: "Sin gesto: ritmo y tono planos, como un locutor." }
     };
 
-    var DEF = { p: "abuela", v: 1, t: 1 };
-    var cfg = DEF;
+    // Nombres característicos por idioma (prioridad: Asia)
+    var NICK = {
+      "zh-CN": "🐉 Maestro Dragón", "zh-TW": "🏯 Sabio Formosa", "zh-HK": "🎭 Dragón de Hong Kong",
+      "ja-JP": "🌸 Maestra Sakura", "ko-KR": "🐯 Tigre Seúl",
+      "es-ES": "👵 Abuela Chi", "es-MX": "🌮 Chi Norteña", "es-US": "🗽 Chi Nueva York",
+      "en-US": "🦅 Águila Chi", "en-GB": "🎩 Caballero Chi",
+      "de-DE": "🍺 Sabio del Rin", "fr-FR": "🥖 Maestro Lou", "it-IT": "🎭 Cantante Chi",
+      "pt-BR": "🦜 Papagayo Chi", "ru-RU": "🐻 Oso Chi", "hi-IN": "🐘 Elefante Chi",
+      "id-ID": "🌴 Chi Tropical", "nl-NL": "🌷 Chi Tulipán", "pl-PL": "🏰 Chi Kraków"
+    };
+    var NICK_BASE = {
+      zh: "🐉 Maestro Dragón", ja: "🌸 Maestra Sakura", ko: "🐯 Tigre Seúl",
+      es: "👵 Abuela Chi", en: "🦅 Águila Chi", de: "🍺 Sabio del Rin",
+      fr: "🥖 Maestro Lou", it: "🎭 Cantante Chi", pt: "🦜 Papagayo Chi",
+      ru: "🐻 Oso Chi", hi: "🐘 Elefante Chi", id: "🌴 Chi Tropical",
+      nl: "🌷 Chi Tulipán", pl: "🏰 Chi Kraków"
+    };
+
+    var DEF = { p: "abuela", v: 1, t: 1, s: "" };
+    var cfg = { p: DEF.p, v: DEF.v, t: DEF.t, s: DEF.s };
     try {
       var raw = localStorage.getItem("chi-voz");
       if (raw) {
         var p = JSON.parse(raw);
-        if (p && PERSONAJES[p.p]) cfg = { p: p.p, v: +p.v || 1, t: typeof p.t === "number" ? p.t : 1 };
+        if (p && PERSONAJES[p.p]) {
+          cfg = {
+            p: p.p,
+            v: +p.v || 1,
+            t: typeof p.t === "number" ? p.t : 1,
+            s: typeof p.s === "string" ? p.s : ""
+          };
+        }
       }
     } catch (e) {}
 
-    function guardar() {
-      try { localStorage.setItem("chi-voz", JSON.stringify(cfg)); } catch (e) {}
+    function guardar() { try { localStorage.setItem("chi-voz", JSON.stringify(cfg)); } catch (e) {} }
+
+    function todas() { try { return speechSynthesis.getVoices() || []; } catch (e) { return []; } }
+
+    function rank(v) {
+      var l = v.lang || "";
+      if (/^(zh|ja|ko)/i.test(l)) return 0;   // asiáticas primero
+      if (/^es/i.test(l)) return 1;
+      return 2;
     }
 
-    function voces() {
-      try {
-        return (speechSynthesis.getVoices() || []).filter(function (v) {
-          return /^es/i.test(v.lang || "");
-        });
-      } catch (e) { return []; }
+    function ordenadas() {
+      return todas()
+        .map(function (v, i) { return { v: v, i: i }; })
+        .sort(function (a, b) { return (rank(a.v) - rank(b.v)) || (a.i - b.i); })
+        .map(function (o) { return o.v; });
+    }
+
+    function nick(v) {
+      var l = (v.lang || "").replace("_", "-");
+      if (NICK[l]) return NICK[l];
+      return NICK_BASE[l.split("-")[0]] || "🗣️ Chi Global";
+    }
+
+    var logN = -1;
+    function listar() {
+      var t = todas();
+      if (t.length === logN) return;
+      logN = t.length;
+      t.forEach(function (v) { console.log(v.name + " | " + v.lang); });
+    }
+
+    function elegida() {
+      var lista = ordenadas();
+      if (cfg.s) {
+        for (var i = 0; i < lista.length; i++) if (lista[i].voiceURI === cfg.s) return lista[i];
+      }
+      return lista.length ? lista[0] : null;   // automática = prioridad asiática
     }
 
     function hablar(texto) {
@@ -138,9 +196,8 @@
       try {
         var per = PERSONAJES[cfg.p] || PERSONAJES.sistema;
         var u = new SpeechSynthesisUtterance(texto);
-        var lista = voces();
-        if (per.voz >= 0 && lista.length) u.voice = lista[per.voz % lista.length];
-        u.lang = "es-ES";
+        var v = elegida();
+        if (v) { u.voice = v; u.lang = v.lang || "es-ES"; } else { u.lang = "es-ES"; }
         u.rate = Math.min(3, Math.max(0.1, cfg.v * per.rate));
         u.pitch = Math.min(2, Math.max(0, cfg.t * per.pitch));
         speechSynthesis.cancel();
@@ -151,16 +208,39 @@
     window.hablar = hablar;
     window.escuchar = hablar;
 
-    try { if (speechSynthesis.onvoiceschanged === null) speechSynthesis.onvoiceschanged = function () {}; } catch (e) {}
-
     var modal = document.getElementById("modal-voz");
     var btn = document.getElementById("btn-voz");
     var sel = document.getElementById("voz-personaje");
+    var selVoz = document.getElementById("voz-synth");
+    var contVoz = document.getElementById("voz-synth-n");
     var vel = document.getElementById("voz-vel");
     var tono = document.getElementById("voz-tono");
     var velVal = document.getElementById("voz-vel-val");
     var tonoVal = document.getElementById("voz-tono-val");
     var desc = document.getElementById("voz-desc");
+
+    function pintarVoces() {
+      var lista = ordenadas();
+      selVoz.innerHTML = '<option value="">🔁 Automática (asiáticas primero)</option>';
+      [[0, "⭐ Asiáticas · prioridad"], [1, "🗣️ Español"], [2, "🌍 Otros idiomas"]].forEach(function (g) {
+        var items = lista.filter(function (v) { return rank(v) === g[0]; });
+        if (!items.length) return;
+        var og = document.createElement("optgroup");
+        og.label = g[1];
+        items.forEach(function (v) {
+          var o = document.createElement("option");
+          o.value = v.voiceURI;
+          o.textContent = nick(v) + " · " + v.name + " | " + (v.lang || "");
+          og.appendChild(o);
+        });
+        selVoz.appendChild(og);
+      });
+      if (lista.length) {
+        selVoz.value = cfg.s || "";
+        if (selVoz.value !== (cfg.s || "")) { cfg.s = ""; selVoz.value = ""; guardar(); }
+      }
+      if (contVoz) contVoz.textContent = lista.length + " voces";
+    }
 
     function pintar() {
       var per = PERSONAJES[cfg.p] || PERSONAJES.sistema;
@@ -169,8 +249,18 @@
       tono.value = cfg.t;
       velVal.textContent = Number(cfg.v).toFixed(2) + "×";
       tonoVal.textContent = Number(cfg.t).toFixed(2);
-      desc.textContent = per.nombre + " — " + per.desc;
+      var v = elegida();
+      desc.textContent = per.nombre + " — " + per.desc +
+        (v ? " · 🔊 " + nick(v) + " (" + (v.lang || "") + ")" : "");
     }
+
+    function refrescar() { listar(); pintarVoces(); pintar(); }
+
+    try {
+      speechSynthesis.onvoiceschanged = refrescar;
+      refrescar();
+      setTimeout(refrescar, 800);
+    } catch (e) {}
 
     function abrir() { modal.hidden = false; pintar(); }
     function cerrar() { modal.hidden = true; }
@@ -182,6 +272,7 @@
     document.addEventListener("keydown", function (e) { if (e.key === "Escape" && !modal.hidden) cerrar(); });
 
     sel.addEventListener("change", function () { cfg.p = sel.value; guardar(); pintar(); hablar("chihochila"); });
+    selVoz.addEventListener("change", function () { cfg.s = selVoz.value; guardar(); pintar(); hablar("chihochila"); });
     vel.addEventListener("input", function () { cfg.v = +vel.value; guardar(); pintar(); });
     tono.addEventListener("input", function () { cfg.t = +tono.value; guardar(); pintar(); });
 
@@ -189,7 +280,8 @@
       hablar("Chihochila, chigrachicias. ¡Chiis!");
     });
     document.getElementById("voz-reset").addEventListener("click", function () {
-      cfg = DEF; guardar(); pintar();
+      cfg = { p: DEF.p, v: DEF.v, t: DEF.t, s: DEF.s };
+      guardar(); pintarVoces(); pintar();
     });
 
     // Permite abrir directo con /?voz=1 (útil para compartir el ajuste)
