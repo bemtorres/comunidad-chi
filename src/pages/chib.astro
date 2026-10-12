@@ -1,4 +1,5 @@
 ---
+import Habla from "../components/HablaModal.astro";
 ---
 <!DOCTYPE html>
 <html lang="es">
@@ -134,9 +135,10 @@ function espanolAChi(t){return t.split(/(\s+)/).map(ch=>/^\s+$/.test(ch)?ch:ch.s
 let modo='chi';const btn=document.getElementById('btn-lang');
 function aplicar(){document.querySelectorAll('[data-es]').forEach(el=>{el.textContent=modo==='chi'?espanolAChi(el.getAttribute('data-es')):el.getAttribute('data-es');});document.querySelectorAll('.chiout').forEach(el=>{el.textContent=espanolAChi(el.getAttribute('data-src')||'');});btn.textContent=modo==='chi'?'👁 Ver en ES':'🐉 Ver en CHI';}
 btn.addEventListener('click',()=>{modo=modo==='chi'?'es':'chi';aplicar();});
-function escuchar(tx){try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(tx);u.lang='es-ES';u.rate=.85;speechSynthesis.speak(u);}catch(e){}}
+function escuchar(tx){if(window.hablar)window.hablar(tx);}
 document.querySelectorAll('button.say').forEach(b=>b.addEventListener('click',()=>{const c=b.closest('.frase,.cuento,.card,.bubble,div');let t=c?c.querySelector('.t,.chiout'):null;let txt=t?t.textContent:b.textContent;if(b.closest('.cuento')&&c.classList.contains('cuento')){txt=[...c.querySelectorAll('.t')].map(x=>x.textContent).join(' ');}escuchar(txt);}));
 aplicar();
 </script>
+<Habla />
 </body>
 </html>

@@ -1,0 +1,198 @@
+---
+---
+<style>
+  .voz-fab{
+    position:fixed;top:74px;right:16px;z-index:90;
+    width:54px;height:54px;border-radius:50%;
+    background:linear-gradient(160deg,#d4af37,#a31616);
+    border:2px solid #f9e076;color:#fff8e7;font-size:1.5rem;
+    cursor:pointer;box-shadow:0 8px 22px rgba(0,0,0,.5);
+    display:grid;place-items:center;transition:.2s;
+  }
+  .voz-fab:hover{transform:scale(1.08)}
+  .voz-overlay{
+    position:fixed;inset:0;z-index:120;
+    background:rgba(10,5,5,.72);backdrop-filter:blur(6px);
+    display:grid;place-items:center;padding:1rem;
+  }
+  .voz-overlay[hidden]{display:none}
+  .voz-panel{
+    width:min(430px,100%);background:linear-gradient(180deg,#fff8e7,#f6e6b3);
+    color:#2b1510;border:3px solid #d4af37;border-radius:20px;
+    box-shadow:0 30px 70px rgba(0,0,0,.6);padding:1.2rem 1.3rem 1.1rem;
+    animation:aparecer .18s ease;
+  }
+  @keyframes aparecer{from{transform:translateY(14px) scale(.97);opacity:0}to{transform:none;opacity:1}}
+  .voz-panel header{display:flex;align-items:center;justify-content:space-between;gap:.6rem}
+  .voz-panel h3{margin:0;font-family:'Ma Shan Zheng',serif;font-size:1.7rem;font-weight:400;color:#a31616}
+  .voz-x{border:none;background:#2b1510;color:#f9e076;width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:.95rem}
+  .voz-x:hover{background:#a31616}
+  .voz-desc{font-size:.9rem;background:#2b1510;color:#f9e076;border-radius:10px;padding:.5rem .7rem;margin:.7rem 0;line-height:1.5}
+  .voz-panel label{display:flex;justify-content:space-between;align-items:center;font-weight:800;font-size:.85rem;letter-spacing:.05em;margin:.75rem 0 .3rem;text-transform:uppercase;color:#7a1212}
+  .voz-panel label b{background:#a31616;color:#fff;border-radius:999px;padding:.1rem .6rem;font-size:.8rem}
+  .voz-panel select{
+    width:100%;padding:.65rem .8rem;border-radius:12px;border:2px solid #d4af37;
+    background:#fffdf2;font-family:inherit;font-size:1rem;font-weight:700;color:#2b1510;cursor:pointer;
+  }
+  .voz-panel input[type=range]{width:100%;accent-color:#c1272d;cursor:pointer}
+  .voz-ejemplo{
+    margin:.9rem 0 .3rem;text-align:center;font-family:'Ma Shan Zheng',serif;
+    font-size:1.5rem;color:#a31616;background:#fff;border:2px dashed #c1272d;
+    border-radius:12px;padding:.5rem;
+  }
+  .voz-ejemplo small{display:block;font-family:'Outfit',sans-serif;font-size:.72rem;color:#8a6d1b;letter-spacing:.1em;text-transform:uppercase}
+  .voz-btns{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.9rem}
+  .voz-btns button{
+    flex:1;border:none;border-radius:999px;padding:.65rem .6rem;font-weight:800;
+    font-family:inherit;font-size:.92rem;cursor:pointer;transition:.15s;white-space:nowrap;
+  }
+  .voz-probar{background:#2b1510;color:#f9e076}
+  .voz-probar:hover{background:#a31616}
+  .voz-reset{background:#fff;border:2px solid #c9a227;color:#2b1510}
+  .voz-reset:hover{background:#f9e076}
+  .voz-ok{background:#c1272d;color:#fff}
+  .voz-ok:hover{background:#a31616}
+  .voz-note{display:block;text-align:center;opacity:.7;margin-top:.7rem;font-size:.75rem}
+  @media(max-width:520px){.voz-fab{top:66px;right:10px;width:48px;height:48px;font-size:1.3rem}}
+</style>
+
+<button class="voz-fab" id="btn-voz" title="Cambiar personaje, velocidad y tono" aria-label="Ajustes de voz">🎙️</button>
+
+<div class="voz-overlay" id="modal-voz" hidden>
+  <div class="voz-panel" role="dialog" aria-modal="true" aria-labelledby="voz-titulo">
+    <header>
+      <h3 id="voz-titulo">🎙️ Quién habla 语音</h3>
+      <button class="voz-x" id="voz-cerrar" aria-label="Cerrar">✕</button>
+    </header>
+
+    <p class="voz-desc" id="voz-desc">—</p>
+
+    <label for="voz-personaje">Personaje 人物</label>
+    <select id="voz-personaje">
+      <option value="dragon">🐉 Maestro Dragón</option>
+      <option value="abuela">👵 Abuela Chi</option>
+      <option value="panda">🐼 Panda Chi</option>
+      <option value="ninja">🥷 Ninja Chi</option>
+      <option value="tigre">🐯 Tigre Chi</option>
+      <option value="sistema">🔊 Voz del sistema</option>
+    </select>
+
+    <label for="voz-vel">Velocidad 速度 <b id="voz-vel-val">1.00×</b></label>
+    <input type="range" id="voz-vel" min="0.5" max="2" step="0.05" value="1" />
+
+    <label for="voz-tono">Tono (pitch) 音调 <b id="voz-tono-val">1.00</b></label>
+    <input type="range" id="voz-tono" min="0" max="2" step="0.05" value="1" />
+
+    <div class="voz-ejemplo"><small>Prueba en Chi</small>chihochila · chigrachicias · chiis</div>
+
+    <div class="voz-btns">
+      <button class="voz-probar" id="voz-probar">🔊 Probar</button>
+      <button class="voz-reset" id="voz-reset">↺ Restablecer</button>
+      <button class="voz-ok" id="voz-ok">✓ Listo</button>
+    </div>
+    <small class="voz-note">Se guarda solo en tu dispositivo (localStorage).</small>
+  </div>
+</div>
+
+<script is:inline>
+  (function () {
+    var PERSONAJES = {
+      dragon:  { nombre: "🐉 Maestro Dragón", rate: 0.78, pitch: 0.55, voz: 0,
+                 desc: "Grave y sabio. Habla lento, como un maestro de kung-fu dando una lección." },
+      abuela:  { nombre: "👵 Abuela Chi", rate: 0.95, pitch: 1.05, voz: 1,
+                 desc: "Cálida y clara, ritmo normal. La que enseña el secreto a los nietos." },
+      panda:   { nombre: "🐼 Panda Chi", rate: 1.0, pitch: 1.7, voz: 2,
+                 desc: "Aguda y alegre, como un niño pequeño que recién aprendió a hablar en Chi." },
+      ninja:   { nombre: "🥷 Ninja Chi", rate: 1.3, pitch: 1.2, voz: 3,
+                 desc: "Rápida y sigilosa. Habla chistando, casi en secreto." },
+      tigre:   { nombre: "🐯 Tigre Chi", rate: 0.9, pitch: 0.3, voz: 4,
+                 desc: "Muy grave e imponente. Ideal para decir ¡chion! 👊" },
+      sistema: { nombre: "🔊 Voz del sistema", rate: 1, pitch: 1, voz: -1,
+                 desc: "La voz predeterminada de tu dispositivo, sin cambios." }
+    };
+
+    var DEF = { p: "abuela", v: 1, t: 1 };
+    var cfg = DEF;
+    try {
+      var raw = localStorage.getItem("chi-voz");
+      if (raw) {
+        var p = JSON.parse(raw);
+        if (p && PERSONAJES[p.p]) cfg = { p: p.p, v: +p.v || 1, t: typeof p.t === "number" ? p.t : 1 };
+      }
+    } catch (e) {}
+
+    function guardar() {
+      try { localStorage.setItem("chi-voz", JSON.stringify(cfg)); } catch (e) {}
+    }
+
+    function voces() {
+      try {
+        return (speechSynthesis.getVoices() || []).filter(function (v) {
+          return /^es/i.test(v.lang || "");
+        });
+      } catch (e) { return []; }
+    }
+
+    function hablar(texto) {
+      if (!texto) return;
+      try {
+        var per = PERSONAJES[cfg.p] || PERSONAJES.sistema;
+        var u = new SpeechSynthesisUtterance(texto);
+        var lista = voces();
+        if (per.voz >= 0 && lista.length) u.voice = lista[per.voz % lista.length];
+        u.lang = "es-ES";
+        u.rate = Math.min(3, Math.max(0.1, cfg.v * per.rate));
+        u.pitch = Math.min(2, Math.max(0, cfg.t * per.pitch));
+        speechSynthesis.cancel();
+        speechSynthesis.speak(u);
+      } catch (e) {}
+    }
+
+    window.hablar = hablar;
+    window.escuchar = hablar;
+
+    try { if (speechSynthesis.onvoiceschanged === null) speechSynthesis.onvoiceschanged = function () {}; } catch (e) {}
+
+    var modal = document.getElementById("modal-voz");
+    var btn = document.getElementById("btn-voz");
+    var sel = document.getElementById("voz-personaje");
+    var vel = document.getElementById("voz-vel");
+    var tono = document.getElementById("voz-tono");
+    var velVal = document.getElementById("voz-vel-val");
+    var tonoVal = document.getElementById("voz-tono-val");
+    var desc = document.getElementById("voz-desc");
+
+    function pintar() {
+      var per = PERSONAJES[cfg.p] || PERSONAJES.sistema;
+      sel.value = cfg.p;
+      vel.value = cfg.v;
+      tono.value = cfg.t;
+      velVal.textContent = Number(cfg.v).toFixed(2) + "×";
+      tonoVal.textContent = Number(cfg.t).toFixed(2);
+      desc.textContent = per.nombre + " — " + per.desc;
+    }
+
+    function abrir() { modal.hidden = false; pintar(); }
+    function cerrar() { modal.hidden = true; }
+
+    btn.addEventListener("click", abrir);
+    document.getElementById("voz-cerrar").addEventListener("click", cerrar);
+    document.getElementById("voz-ok").addEventListener("click", cerrar);
+    modal.addEventListener("click", function (e) { if (e.target === modal) cerrar(); });
+    document.addEventListener("keydown", function (e) { if (e.key === "Escape" && !modal.hidden) cerrar(); });
+
+    sel.addEventListener("change", function () { cfg.p = sel.value; guardar(); pintar(); hablar("chihochila"); });
+    vel.addEventListener("input", function () { cfg.v = +vel.value; guardar(); pintar(); });
+    tono.addEventListener("input", function () { cfg.t = +tono.value; guardar(); pintar(); });
+
+    document.getElementById("voz-probar").addEventListener("click", function () {
+      hablar("Chihochila, chigrachicias. ¡Chiis!");
+    });
+    document.getElementById("voz-reset").addEventListener("click", function () {
+      cfg = DEF; guardar(); pintar();
+    });
+
+    // Permite abrir directo con /?voz=1 (útil para compartir el ajuste)
+    if (/[?&]voz=1/.test(location.search)) abrir();
+  })();
+</script>

@@ -1,0 +1,150 @@
+---
+import Habla from "../components/HablaModal.astro";
+---
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>CHIC 🐲 Nivel 3 — Maestro Chi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Outfit:wght@300;400;600;700;800&family=Noto+Serif+SC:wght@600;900&display=swap" rel="stylesheet" />
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐲</text></svg>" />
+<style>
+:root{--rojo:#a31616;--rojo-b:#c1272d;--dorado:#d4af37;--dorado-c:#f9e076;--crema:#fff8e7;--papel:#fdf3d8;--tinta:#2b1510;--negro:#160808}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;font-family:'Outfit',system-ui,sans-serif;background:var(--negro);color:var(--crema)}
+.pattern-bg{position:fixed;inset:0;z-index:-2;background:radial-gradient(circle at 50% 10%,#7a1212 0%,transparent 50%),linear-gradient(180deg,#1e0808,#2e0d0d 50%,#160808)}
+.pattern-bg::after{content:"";position:absolute;inset:0;opacity:.08;background-image:repeating-linear-gradient(45deg,var(--dorado) 0 2px,transparent 2px 28px),repeating-linear-gradient(-45deg,var(--dorado) 0 2px,transparent 2px 28px)}
+nav{position:sticky;top:0;z-index:60;backdrop-filter:blur(12px);background:rgba(22,8,8,.92);border-bottom:2px solid var(--dorado)}
+.nav-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:.7rem 1.2rem;gap:.6rem}
+.logo{display:flex;align-items:center;gap:.6rem;font-weight:800}
+.sello{width:42px;height:42px;background:var(--rojo-b);display:grid;place-items:center;border-radius:8px;font-family:'Ma Shan Zheng',serif;font-size:1.7rem;border:2px solid var(--dorado)}
+.nav-links{display:flex;gap:.5rem;align-items:center;flex-wrap:wrap;font-size:.88rem}
+.nav-links a{color:inherit;text-decoration:none;opacity:.9}
+#btn-lang{background:var(--dorado);color:#2b1510;border:none;border-radius:999px;padding:.55rem 1.1rem;font-weight:800;cursor:pointer;font-family:inherit}
+.wrap{max-width:1000px;margin:0 auto;padding:0 1.2rem}
+.hero{text-align:center;padding:3rem 0 1rem}
+h1{font-family:'Ma Shan Zheng',serif;font-size:clamp(2.8rem,7vw,4.8rem);margin:.4rem 0}
+h1 span{color:var(--dorado-c)}
+h2{font-family:'Ma Shan Zheng',serif;font-size:clamp(1.8rem,4vw,2.6rem);margin:0;font-weight:400}
+h2 em{color:var(--dorado-c);font-style:normal}
+.etiqueta{display:inline-block;border:1px solid var(--dorado);border-radius:999px;padding:.35rem .9rem;font-size:.8rem;letter-spacing:.16em;color:var(--dorado-c);background:rgba(212,175,55,.12)}
+.instr{background:#fff8e7;color:#2b1510;border-radius:14px;padding:.9rem 1.1rem;border:3px solid var(--dorado);margin:1rem 0;line-height:1.6}
+section{padding:1.8rem 0}
+.linea{height:2px;background:linear-gradient(90deg,transparent,var(--dorado),transparent);margin:1rem 0 1.4rem}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+@media(max-width:800px){.grid2{grid-template-columns:1fr}}
+.card{background:rgba(255,248,231,.07);border:1px solid rgba(212,175,55,.4);border-radius:18px;padding:1.2rem;margin:.8rem 0}
+.card.papel{background:linear-gradient(180deg,var(--papel),#f6e6b3);color:var(--tinta);border:3px solid var(--dorado)}
+.frase{background:#fffdf2;color:var(--tinta);border-radius:14px;padding:.9rem;border-left:8px solid var(--rojo-b);margin:.6rem 0}
+.frase .t{font-family:'Ma Shan Zheng',serif;font-size:1.4rem;color:var(--rojo)}
+.frase .ayuda{font-size:.85rem;opacity:.75}
+.tabla{width:100%;border-collapse:collapse;background:#fffdf2;color:var(--tinta);border-radius:12px;overflow:hidden;font-size:.95rem}
+.tabla th{background:var(--rojo-b);color:#fff;padding:.6rem;text-align:left}
+.tabla td{padding:.6rem;border-bottom:1px solid #e0cf9a}
+.chiout{font-weight:800;color:var(--rojo)}
+.cuento{background:linear-gradient(180deg,#fffdf2,#f7e7b8);color:var(--tinta);border-radius:18px;padding:1.3rem;border:4px double var(--rojo-b);line-height:1.9;font-size:1.08rem}
+.cuento .t{display:block;margin:.4rem 0}
+.chat{display:flex;flex-direction:column;gap:.6rem;margin-top:.8rem}
+.bubble{max-width:85%;padding:.7rem 1rem;border-radius:16px;line-height:1.5}
+.bubble.left{background:#ffe9e9;color:#5c0a0a;align-self:flex-start;border:2px solid var(--rojo-b)}
+.bubble.right{background:#fff6d8;color:#4a2f00;align-self:flex-end;border:2px solid var(--dorado)}
+.bubble b{font-size:.78rem;display:block;opacity:.7}
+.bubble .t{font-weight:700;font-size:1.05rem}
+button.say{margin-top:.35rem;font-size:.82rem;border-radius:999px;border:1px solid currentColor;background:transparent;padding:.25rem .7rem;cursor:pointer}
+.examen{background:rgba(193,39,45,.2);border:2px dashed var(--dorado);border-radius:16px;padding:1.1rem;margin-top:.8rem}
+footer{border-top:2px solid var(--dorado);padding:1.6rem;text-align:center;opacity:.85}
+.btn{display:inline-block;border:none;border-radius:999px;padding:.75rem 1.3rem;font-weight:800;text-decoration:none;font-family:inherit;cursor:pointer}
+.btn-d{background:var(--dorado);color:#2b1510}.btn-g{background:transparent;color:var(--crema);border:1px solid var(--dorado)}
+.modo-aviso{font-size:.85rem;opacity:.85}
+.libre{display:grid;grid-template-columns:1fr 1fr;gap:.8rem;margin-top:.8rem}
+@media(max-width:700px){.libre{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="pattern-bg"></div>
+<nav><div class="nav-inner">
+<div class="logo"><div class="sello">師</div><a href="/curso" style="text-decoration:none;color:inherit">← Curso</a><span>· CHIC 🐲</span></div>
+<div class="nav-links"><a href="/chia">CHIA 🌱</a><a href="/chib">CHIB 🔥</a><button id="btn-lang">👁 Ver en ES</button></div>
+</div></nav>
+<div class="wrap">
+<header class="hero">
+<div class="etiqueta">🐲 NIVEL 3 · 高级 · MAESTRO 高手</div>
+<h1>CHIC <span>气C</span></h1>
+<p class="modo-aviso">Todo está escrito en <strong>Chi</strong>. Botón <strong>👁 Ver en ES</strong> arriba para instrucciones en español.</p>
+<div class="instr"><strong class="t" data-es="Instrucción: aquí ya conversas de verdad. Opinas, bromias, cuentas y dialogas con otro sin guion. Sin frenarte, con expresión de maestro.">Instrucción</strong><br/><span class="t" data-es="Meta de CHIC: tener un diálogo completo con otro persona en Chi durante 2 minutos.">Meta</span></div>
+</header>
+
+<section><h2>📜 Historia <em>la filosofía del maestro</em></h2><div class="linea"></div>
+<div class="card papel">
+<p class="t" data-es="El maestro dijo: el Chi no se aprende en la mesa, se aprende hablando. El que calla no aprende. El que se equivoca escribe chiis o chion y sigue.">h1</p>
+<p class="t" data-es="Y enseñó el secreto final: si los tuyos entienden tu Chi sin traductor, ya no es juego — es idioma de familia. Grábalo en tu corazón y pásalo a tus hijos. Así nació CHIC.">h2</p>
+<button class="say btn btn-d">🔊 Escuchar historia</button>
+</div></section>
+
+<section><h2>🔤 Lección <em>trabalenguas y opinión</em></h2><div class="linea"></div>
+<div class="grid2">
+<div class="card"><h3>🌪️ Trabalenguas Chi</h3><p class="t" data-es="Dilo rápido y sin resoplar. Si resoplas, lo pierdes.">t1</p>
+<table class="tabla"><tr><th>ES</th><th>CHI (rápido)</th></tr>
+<tr><td>tres tristes tigres</td><td class="chiout" data-src="tres tristes tigres"></td></tr>
+<tr><td>dragón, dragón, dragón</td><td class="chiout" data-src="dragón dragón dragón"></td></tr>
+<tr><td>la abuela habla chino</td><td class="chiout" data-src="la abuela habla chino"></td></tr>
+</table></div>
+<div class="card"><h3>🗣️ Opinar y discutir</h3><table class="tabla"><tr><th>ES</th><th>CHI</th></tr>
+<tr><td>Yo creo que sí</td><td class="chiout" data-src="Yo creo que sí"></td></tr>
+<tr><td>Yo creo que no</td><td class="chiout" data-src="Yo creo que no"></td></tr>
+<tr><td>Estoy de acuerdo contigo</td><td class="chiout" data-src="Estoy de acuerdo contigo"></td></tr>
+<tr><td>No estoy de acuerdo</td><td class="chiout" data-src="No estoy de acuerdo"></td></tr>
+<tr><td>Cuéntame una historia</td><td class="chiout" data-src="Cuéntame una historia"></td></tr>
+<tr><td>Bromear: ¿qué me dices?</td><td class="chiout" data-src="Qué me dices"></td></tr>
+</table></div>
+</div></section>
+
+<section><h2>💬 Frases <em>para hablar con otro</em></h2><div class="linea"></div>
+<div class="frase"><div class="t" data-es="¿Qué opinas tú? Yo creo que sí">f</div><div class="ayuda">🤔 barbilla + 🙏 chiis al responder</div><button class="say">🔊</button></div>
+<div class="frase"><div class="t" data-es="No estoy de acuerdo, pero te respeto">f</div><div class="ayuda">👊 chion seguido de reverencia 🙏</div><button class="say">🔊</button></div>
+<div class="frase"><div class="t" data-es="Cuéntame, tengo tiempo y estoy feliz">f</div><div class="ayuda">👂 manos detrás de la espalda</div><button class="say">🔊</button></div>
+<div class="frase"><div class="t" data-es="Eres bueno, puedes ser maestro">f</div><div class="ayuda">🐉 voz grave de sabio</div><button class="say">🔊</button></div>
+</section>
+
+<section><h2>📖 Cuento <em>los dos maestros</em></h2><div class="linea"></div>
+<div class="cuento">
+<span class="t" data-es="Dos maestros se encontraron en la montaña. Uno hablaba en Chi y el otro no.">c1</span>
+<span class="t" data-es="El primero saludó: hola, ¿cómo estás? El otro no entendió nada.">c2</span>
+<span class="t" data-es="Entonces el maestro enseñó la regla: pon chi antes de cada sílaba. Y el otro lo intentó.">c3</span>
+<span class="t" data-es="Al tercer día, el segundo maestro gritó: chiis! Con sonrisa y reverencia.">c4</span>
+<span class="t" data-es="Desde entonces hablan juntos en Chi. Fin. Ahora crea tu propio cuento.">c5</span>
+<div><button class="say btn btn-d">🔊 Escuchar cuento</button></div>
+</div></section>
+
+<section><h2>⚔️ Diálogo libre <em>dos maestros conversan</em></h2><div class="linea"></div>
+<div class="card"><p class="t" data-es="Lee solo las primeras líneas de apertura. Después conversen libre, sin guion. Ese es el examen de verdad: seguir en Chi sin frenarse.">instr</p>
+<div class="chat">
+<div class="bubble left"><b>🐉 Maestro Rojo</b><div class="t" data-es="Hola, maestro. ¿Qué enseñas hoy?">d</div><button class="say">🔊</button></div>
+<div class="bubble right"><b>🐅 Maestro Dorado</b><div class="t" data-es="Enseño Chi a los niños. ¿Vienes conmigo?">d</div><button class="say">🔊</button></div>
+</div>
+<div class="libre">
+<div class="card" style="background:rgba(193,39,45,.15)"><h3>🐉 Piensa en Rojo</h3><p class="t" data-es="Apertura sugerida: ¿por qué Chi es importante? ¿Qué hace la gente en tu casa?">libre1</p></div>
+<div class="card" style="background:rgba(212,175,55,.15)"><h3>🐅 Piensa en Dorado</h3><p class="t" data-es="Apertura sugerida: cuéntale un sueño, pregunta por su familia, dilo con expresión.">libre2</p></div>
+</div>
+<div class="examen"><strong class="t" data-es="EXAMEN FINAL: diálogo de 2 minutos con otro en Chi. Sin papel. Con chiis y chion y con expresión. Si lo logras, ya eres Maestro Chi. 🐲">examen</strong><br/><br/><a class="btn btn-d" href="/curso">Volver al Curso 🎓</a> <a class="btn btn-g" href="/chib">← CHIB</a></div>
+</div></section>
+</div>
+<footer>🐲 CHIC · Maestro Chi · Sí = chiis · No = chion · <a href="/curso" style="color:inherit">Curso</a></footer>
+<script>
+const VOC="aeiouáéíóúüAEIOUÁÉÍÓÚÜ";const esV=c=>VOC.includes(c);const esF=c=>"áéíóúÁÉÍÓÚ".includes(c);
+function dividirSilabas(p){if(!p)return[];const w=p,n=w.length;let idx=[];for(let i=0;i<n;i++)if(esV(w[i]))idx.push(i);if(idx.length===0)return[w];if(idx.length===1)return[w];let cortes=[];for(let k=0;k<idx.length-1;k++){const v1=idx[k],v2=idx[k+1],entre=w.slice(v1+1,v2),c=entre.length;if(c===0){const a=w[v1].toLowerCase(),b=w[v2].toLowerCase(),deb=new Set(['i','u','ü']);const dip=(deb.has(a)||deb.has(b))&&!esF(w[v1])&&!esF(w[v2]);if(!dip)cortes.push(v2);}else if(c===1)cortes.push(v1+1);else if(c===2){const cc=entre.toLowerCase(),g=['br','cr','dr','fr','gr','pr','tr','bl','cl','dl','fl','gl','pl','tl','ch','ll','rr','qu','gu'];cortes.push(g.includes(cc)?v1+1:v1+2);}else if(c===3){const u2=entre.slice(1).toLowerCase(),g=['br','cr','dr','fr','gr','pr','tr','bl','cl','fl','gl','pl','tr'];cortes.push(g.includes(u2)?v1+2:v1+3);}else cortes.push(v1+c-1);}let s=[],ini=0;for(const co of cortes){if(co>0&&co<n){s.push(w.slice(ini,co));ini=co;}}s.push(w.slice(ini));return s.filter(Boolean);}
+function copiarMayus(o,d){if(!o)return d;return o[0]===o[0].toUpperCase()?d[0].toUpperCase()+d.slice(1):d;}
+function palabraAChi(pal){const m=pal.match(/^([^A-Za-zÁÉÍÓÚÜÑñáéíóúü]*)([A-Za-zÁÉÍÓÚÜÑñáéíóúü]+)([^A-Za-zÁÉÍÓÚÜÑñáéíóúü]*)$/);if(!m)return pal;const[,pre,nuc,post]=m,low=nuc.toLowerCase();if(low==="sí"||low==="si")return pre+copiarMayus(nuc,"chiis")+post;if(low==="no")return pre+copiarMayus(nuc,"chion")+post;return pre+copiarMayus(nuc,dividirSilabas(nuc).map(s=>"chi"+s.toLowerCase()).join(""))+post;}
+function espanolAChi(t){return t.split(/(\s+)/).map(ch=>/^\s+$/.test(ch)?ch:ch.split(/([A-Za-zÁÉÍÓÚÜÑñáéíóúü]+)/g).map(p=>/^[A-Za-zÁÉÍÓÚÜÑñáéíóúü]+$/.test(p)?palabraAChi(p):p).join("")).join("");}
+let modo='chi';const btn=document.getElementById('btn-lang');
+function aplicar(){document.querySelectorAll('[data-es]').forEach(el=>{el.textContent=modo==='chi'?espanolAChi(el.getAttribute('data-es')):el.getAttribute('data-es');});document.querySelectorAll('.chiout').forEach(el=>{el.textContent=espanolAChi(el.getAttribute('data-src')||'');});btn.textContent=modo==='chi'?'👁 Ver en ES':'🐉 Ver en CHI';}
+btn.addEventListener('click',()=>{modo=modo==='chi'?'es':'chi';aplicar();});
+function escuchar(tx){if(window.hablar)window.hablar(tx);}
+document.querySelectorAll('button.say').forEach(b=>b.addEventListener('click',()=>{const c=b.closest('.frase,.cuento,.card,.bubble,div');let t=c?c.querySelector('.t,.chiout'):null;let txt=t?t.textContent:b.textContent;if(b.closest('.cuento')&&c.classList.contains('cuento')){txt=[...c.querySelectorAll('.t')].map(x=>x.textContent).join(' ');}escuchar(txt);}));
+aplicar();
+</script>
+<Habla />
+</body>
+</html>

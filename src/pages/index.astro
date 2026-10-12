@@ -1,4 +1,55 @@
 ---
+import { espanolAChi, desgloseChi } from "../lib/chi";
+import Habla from "../components/HablaModal.astro";
+
+type Expr = { cat: string; es: string; gesto: string };
+
+const baseExprs: Expr[] = [
+  { cat: "Saludos 问候", es: "Hola, ¿cómo estás?", gesto: "🙏 reverencia + sonrisa" },
+  { cat: "Saludos 问候", es: "Buenos días", gesto: "🙏 manos juntas" },
+  { cat: "Saludos 问候", es: "Buenas noches", gesto: "🌙 voz suave + reverencia" },
+  { cat: "Saludos 问候", es: "¿Qué tal?", gesto: "👋 mano arriba, cantado" },
+  { cat: "Saludos 问候", es: "¿Qué haces?", gesto: "👀 curioso + cantado" },
+  { cat: "Despedidas 告别", es: "Adiós, nos vemos mañana", gesto: "👋 adiós con las dos manos" },
+  { cat: "Despedidas 告别", es: "Nos vemos al rato", gesto: "👋 guiño + cantado" },
+  { cat: "Despedidas 告别", es: "Cuídate mucho", gesto: "❤️ mano al corazón" },
+  { cat: "Cortesía 礼貌", es: "Gracias por todo", gesto: "🙏 reverencia profunda" },
+  { cat: "Cortesía 礼貌", es: "Por favor", gesto: "🙏 manitas juntas + voz dulce" },
+  { cat: "Cortesía 礼貌", es: "Perdón, lo siento", gesto: "🥺 manos al pecho" },
+  { cat: "Cortesía 礼貌", es: "De nada", gesto: "😊 sonrisa + reverencia corta" },
+  { cat: "Amor y amistad 爱", es: "Te quiero mucho", gesto: "❤️ manos en corazón" },
+  { cat: "Amor y amistad 爱", es: "Eres mi mejor amigo", gesto: "🤗 abrazo grande" },
+  { cat: "Amor y amistad 爱", es: "Abrazo grande", gesto: "🤗 brazos abiertos" },
+  { cat: "Familia 家族", es: "Mamá, papá, los amo", gesto: "❤️ señalar al cielo + corazón" },
+  { cat: "Familia 家族", es: "Bienvenidos a la familia", gesto: "🏮 brazos abiertos como dragón" },
+  { cat: "Familia 家族", es: "Vamos a la casa", gesto: "🏠 manos como techo" },
+  { cat: "Comida 美食", es: "Vamos a comer", gesto: "🍜 frotar la panza" },
+  { cat: "Comida 美食", es: "Qué rico está esto", gesto: "😋 beso al aire + panza" },
+  { cat: "Comida 美食", es: "Tengo hambre", gesto: "🍚 panza + cara de antojo" },
+  { cat: "Juegos 街", es: "Vamos a jugar", gesto: "⚽ saltar + cantar rápido" },
+  { cat: "Juegos 街", es: "Pásame la pelota", gesto: "⚽ manos pidiendo + gritito" },
+  { cat: "Juegos 街", es: "Me toca a mí", gesto: "☝️ señalarse + voz aguda" },
+  { cat: "Ánimo 加油", es: "Tú puedes, no te rindas", gesto: "💪 puño arriba. El 'no' es ¡chion! 👊" },
+  { cat: "Emociones 情感", es: "Estoy feliz", gesto: "🎉 brazos arriba + risa" },
+  { cat: "Emociones 情感", es: "Estoy enojado", gesto: "😠 brazos cruzados + voz grave" },
+  { cat: "Emociones 情感", es: "Qué susto me diste", gesto: "😱 manos a la cara" },
+  { cat: "Emociones 情感", es: "Qué divertido", gesto: "🤣 risa + palmas" },
+  { cat: "Fiesta 庆祝", es: "Feliz cumpleaños", gesto: "🎂 cantar + palmas" },
+  { cat: "Escuela 学校", es: "Vamos a la escuela", gesto: "🎒 mochila + marcha cantada" },
+  { cat: "Sagradas 神圣", es: "Sí, con todo el corazón", gesto: "🙏 ¡chiis! [chīís] alargado ⬆ sonrisa + reverencia" },
+  { cat: "Sagradas 神圣", es: "No, ni lo sueñes", gesto: "👊 ¡chion! [chiǒn] seco ⬇ brazos cruzados" },
+  { cat: "Sagradas 神圣", es: "¿Vienes conmigo? ¡Sí!", gesto: "🙏 pregunta cantada + respuesta ¡chiis! ⬆" },
+  { cat: "Sagradas 神圣", es: "¿Te rindes? ¡No!", gesto: "👊 pregunta grave + respuesta ¡chion! ⬇" },
+  { cat: "Dragón 龙", es: "Que el dragón te acompañe", gesto: "🐉 brazos de dragón + voz de maestro" },
+];
+
+const expresiones = baseExprs.map((e) => ({
+  ...e,
+  chi: espanolAChi(e.es),
+  des: desgloseChi(e.es),
+}));
+
+const categorias = ["Todas", ...new Set(expresiones.map((e) => e.cat))];
 ---
 
 <!DOCTYPE html>
@@ -98,7 +149,13 @@
   }
   h1 span{color:var(--dorado-claro)}
   .sub{max-width:660px;margin:0 auto;font-size:1.15rem;line-height:1.6;opacity:.92}
-  .hanzi-deco{font-family:'Noto Serif SC',serif;opacity:.18;font-size:clamp(4rem,12vw,9rem);line-height:1;user-select:none}
+  .hanzi-deco{
+    position:absolute;top:50%;left:50%;z-index:0;
+    transform:translate(-50%,-50%);
+    font-family:'Noto Serif SC',serif;font-size:clamp(4rem,12vw,9rem);
+    line-height:1;opacity:.18;user-select:none;pointer-events:none;white-space:nowrap;
+  }
+  .hero>*:not(.hanzi-deco){position:relative;z-index:1}
 
   .hero-card{
     margin:2rem auto 0;max-width:760px;
@@ -207,19 +264,49 @@
   .meta{display:flex;flex-wrap:wrap;gap:.8rem;align-items:center;margin-top:.9rem;font-size:.9rem;opacity:.8}
 
   /* expresiones */
-  .expr-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-top:1.2rem}
-  @media(max-width:900px){.expr-grid{grid-template-columns:1fr 1fr}}
-  @media(max-width:620px){.expr-grid{grid-template-columns:1fr}}
-  .expr{background:#fffdf2;color:var(--tinta);border-radius:16px;padding:1rem 1rem 1.1rem;border-left:8px solid var(--rojo-brillante);border-top:2px solid var(--dorado);border-right:2px solid var(--dorado);border-bottom:2px solid var(--dorado)}
-  .expr small{letter-spacing:.12em;text-transform:uppercase;color:#8a6d1b;font-weight:700;font-size:.72rem}
-  .expr .es{font-weight:700;margin:.2rem 0}
-  .expr .ch{font-family:'Ma Shan Zheng',serif;font-size:1.4rem;color:var(--rojo);word-break:break-word}
-  .expr .des{font-size:.82rem;background:#2b1510;color:var(--dorado-claro);border-radius:8px;padding:.35rem .6rem;margin-top:.5rem;line-height:1.5}
-  .expr .gesto{font-size:.88rem;margin-top:.4rem}
-  .expr button{margin-top:.5rem;font-size:.85rem;border-radius:999px;border:1px solid var(--rojo);background:transparent;padding:.3rem .8rem}
-  .expr button:hover{background:var(--rojo);color:#fff}
+  .expr-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.1rem;margin-top:1.4rem}
+  .expr{
+    display:flex;flex-direction:column;gap:.5rem;
+    background:linear-gradient(180deg,#fffdf2 0%,#fdf3d8 100%);
+    color:var(--tinta);
+    border-radius:18px;padding:1.1rem 1.1rem 1.2rem;
+    border:2px solid var(--dorado);
+    border-top:6px solid var(--rojo-brillante);
+    box-shadow:0 10px 26px rgba(0,0,0,.35);
+    transition:transform .18s ease, box-shadow .18s ease;
+  }
+  .expr:hover{transform:translateY(-5px);box-shadow:0 18px 36px rgba(0,0,0,.45)}
+  .expr .cat{
+    align-self:flex-start;background:var(--rojo-brillante);color:#fff;
+    border-radius:999px;padding:.22rem .75rem;
+    font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;font-weight:800;
+  }
+  .expr .es{font-weight:800;font-size:1.05rem;line-height:1.35}
+  .expr .ch{
+    font-family:'Ma Shan Zheng','Noto Serif SC',serif;
+    font-size:1.75rem;line-height:1.15;color:var(--rojo);
+    word-break:break-word;background:#fff;border:2px dashed var(--rojo);
+    border-radius:12px;padding:.35rem .6rem;
+  }
+  .expr .des{
+    font-size:.78rem;background:#2b1510;color:var(--dorado-claro);
+    border-radius:10px;padding:.45rem .6rem;line-height:1.55;word-break:break-word;
+  }
+  .expr .gesto{
+    font-size:.85rem;color:#5c0a0a;font-weight:600;
+    background:rgba(193,39,45,.1);border:1px dashed var(--rojo);
+    border-radius:10px;padding:.45rem .6rem;line-height:1.5;
+  }
+  .expr .say{
+    margin-top:auto;align-self:flex-start;
+    border:1px solid var(--rojo);background:transparent;color:var(--rojo);
+    border-radius:999px;padding:.35rem .9rem;font-size:.85rem;font-weight:700;cursor:pointer;
+    transition:.18s;
+  }
+  .expr .say:hover{background:var(--rojo);color:#fff}
+  .expr-grid .vacio{grid-column:1/-1;background:rgba(255,248,231,.08);border:1px dashed var(--dorado);border-radius:14px;padding:1.2rem;text-align:center;opacity:.85}
   .filtros{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1rem}
-  .filtro{border:1px solid var(--dorado);background:transparent;color:var(--crema);border-radius:999px;padding:.4rem .9rem;font-size:.88rem;font-weight:600}
+  .filtro{border:1px solid var(--dorado);background:transparent;color:var(--crema);border-radius:999px;padding:.4rem .9rem;font-size:.88rem;font-weight:600;cursor:pointer;transition:.15s}
   .filtro.activo,.filtro:hover{background:var(--dorado);color:#2b1510}
   .buscador{margin-top:1rem;display:flex;gap:.6rem}
   .buscador input{flex:1;border-radius:999px;border:2px solid var(--dorado);background:#fffdf2;padding:.7rem 1.1rem;font-family:inherit;font-size:1rem;color:var(--tinta)}
@@ -373,9 +460,25 @@
       </ul>
     </div>
     <div class="buscador"><input id="buscar-expr" placeholder="🔍 Buscar expresión... ej: gracias, amigo, comer" /></div>
-    <div class="filtros" id="filtros"></div>
-    <div class="expr-grid" id="expr-grid"></div>
-    <p style="opacity:.75;font-size:.9rem;margin-top:1rem">💡 <span id="conteo-expr"></span> — Todas se generan con el mismo traductor de abajo, así que lo que ves aquí es exactamente lo que el traductor produce.</p>
+    <div class="filtros" id="filtros">
+      {categorias.map((c) => (
+        <button class:list={["filtro", { activo: c === "Todas" }]} data-cat={c}>{c}</button>
+      ))}
+    </div>
+    <div class="expr-grid" id="expr-grid">
+      {expresiones.map((e) => (
+        <article class="expr" data-cat={e.cat} data-busca={(e.es + " " + e.chi).toLowerCase()}>
+          <span class="cat">{e.cat}</span>
+          <div class="es">{e.es}</div>
+          <div class="ch">{e.chi}</div>
+        {/* <div class="des">🔍 {e.des}</div>*/}
+          <div class="gesto">🎭 {e.gesto}</div>
+          <button class="say" data-tx={e.chi}>🔊 Escuchar</button>
+        </article>
+      ))}
+      <p class="vacio" id="expr-vacio" hidden>😅 Chion... no encontramos nada. Prueba con “hola” o “gracias”.</p>
+    </div>
+    <p style="opacity:.75;font-size:.9rem;margin-top:1rem">💡 <span id="conteo-expr">{expresiones.length} expresiones en Chi</span> — Todas se generan con el mismo traductor de abajo, así que lo que ves aquí es exactamente lo que el traductor produce.</p>
   </section>
 
   <!-- TRADUCTOR -->
@@ -438,114 +541,8 @@
 </footer>
 
 <script>
-  // ---------- SILABEADOR ESPAÑOL SIMPLIFICADO ----------
-  const VOCALES = "aeiouáéíóúüAEIOUÁÉÍÓÚÜ";
-  const esVocal = (c) => VOCALES.includes(c);
-  const esAcentoFuerte = (c) => "áéíóúÁÉÍÓÚ".includes(c);
-
-  function dividirSilabas(palabra){
-    if(!palabra) return [];
-    const w = palabra;
-    const n = w.length;
-    // posiciones de vocales (núcleos)
-    let idxV = [];
-    for(let i=0;i<n;i++) if(esVocal(w[i])) idxV.push(i);
-    if(idxV.length===0) return [w]; // sin vocal: una sílaba
-    if(idxV.length===1){
-      return [w];
-    }
-    let cortes = []; // índice donde empieza nueva sílaba
-    for(let k=0;k<idxV.length-1;k++){
-      const v1 = idxV[k], v2 = idxV[k+1];
-      const entre = w.slice(v1+1, v2); // consonantes entre vocales
-      const c = entre.length;
-      if(c===0){
-        // V-V: hiato, separar salvo diptongo débil? simplificamos: si ambas débiles o forman diptongo, no cortar
-        const a = w[v1].toLowerCase(), b = w[v2].toLowerCase();
-        const debiles = new Set(['i','u','ü']);
-        const esDiptongo = (debiles.has(a) || debiles.has(b)) && !esAcentoFuerte(w[v1]) && !esAcentoFuerte(w[v2]);
-        if(!esDiptongo) cortes.push(v2);
-        // si diptongo, no corte
-      } else if(c===1){
-        cortes.push(v1+1); // V|CV
-      } else if(c===2){
-        const cc = entre.toLowerCase();
-        const gruposInseparables = ['br','cr','dr','fr','gr','pr','tr','bl','cl','dl','fl','gl','pl','tl','ch','ll','rr','qu','gu'];
-        if(gruposInseparables.includes(cc)) cortes.push(v1+1); // V|CCV
-        else cortes.push(v1+2); // VC|CV
-      } else if(c===3){
-        cortes.push(v1+3); // en gral VC|CCV (las 2 últimas forman grupo)
-        // ajuste: ... VCC|CV? usamos v1+2 si las últimas 2 no son grupo? simplificamos a v1+2? Mejor:
-        // re-evaluar: últimas 2 letras
-        const ult2 = entre.slice(1).toLowerCase();
-        const grupos = ['br','cr','dr','fr','gr','pr','tr','bl','cl','fl','gl','pl','tr'];
-        // si ult2 es grupo, corte antes de ellas, sino antes de última
-        cortes[cortes.length-1] = grupos.includes(ult2) ? (v1+2) : (v1+3);
-      } else {
-        cortes.push(v1+c-1); // fallback
-      }
-    }
-    // construir sílabas
-    let silabas = [];
-    let inicio = 0;
-    for(const corte of cortes){
-      if(corte>0 && corte<n) { silabas.push(w.slice(inicio, corte)); inicio = corte; }
-    }
-    silabas.push(w.slice(inicio));
-    return silabas.filter(Boolean);
-  }
-
-  function palabraAChi(palabra){
-    // conservar solo letras (incluye ñ, acentos)
-    const m = palabra.match(/^([^A-Za-zÁÉÍÓÚÜÑñáéíóúü]*)([A-Za-zÁÉÍÓÚÜÑñáéíóúü]+)([^A-Za-zÁÉÍÓÚÜÑñáéíóúü]*)$/);
-    if(!m) return palabra;
-    const [, pre, nucleo, post] = m;
-    const low = nucleo.toLowerCase();
-    if(low==="sí"||low==="si") return pre + copiarMayus(nucleo,"chiis") + post;
-    if(low==="no") return pre + copiarMayus(nucleo,"chion") + post;
-    const silabas = dividirSilabas(nucleo);
-    const trans = silabas.map(s => "chi" + s.toLowerCase()).join("");
-    return pre + copiarMayus(nucleo, trans) + post;
-  }
-
-  function copiarMayus(orig, dest){
-    if(!orig) return dest;
-    if(orig[0]===orig[0].toUpperCase()) return dest[0].toUpperCase()+dest.slice(1);
-    return dest;
-  }
-
-  function espanolAChi(texto){
-    // separa preservando espacios
-    return texto.split(/(\s+)/).map(chunk=>{
-      if(/^\s+$/.test(chunk)) return chunk;
-      // separar por palabras manteniendo puntuación: usamos split por límites
-      return chunk.split(/([A-Za-zÁÉÍÓÚÜÑñáéíóúü]+)/g).map(p=>{
-        if(/^[A-Za-zÁÉÍÓÚÜÑñáéíóúü]+$/.test(p)) return palabraAChi(p);
-        return p;
-      }).join("");
-    }).join("");
-  }
-
-  function chiAEspanol(texto){
-    return texto.split(/(\s+)/).map(chunk=>{
-      if(/^\s+$/.test(chunk)) return chunk;
-      return chunk.split(/([A-Za-zÁÉÍÓÚÜÑñáéíóúü]+)/g).map(p=>{
-        if(!/^[A-Za-zÁÉÍÓÚÜÑñáéíóúü]+$/.test(p)) return p;
-        const low = p.toLowerCase();
-        if(low==="chiis") return copiarMayus(p,"sí");
-        if(low==="chion") return copiarMayus(p,"no");
-        // decodificar: quitar "chi" inicial de cada sílaba estimada.
-        // Estrategia: separar por "chi" insensible a mayúsculas
-        // Ej: chihochila -> ["","ho","la"] -> hola
-        let partes = low.split("chi").filter(x=>x!=="");
-        if(partes.length===0) return p;
-        // Si la palabra no empezaba con chi, no era chi -> devolver original
-        if(!low.startsWith("chi")) return p;
-        const rec = partes.join("");
-        return copiarMayus(p, rec);
-      }).join("");
-    }).join("");
-  }
+  // Motor de Chi compartido (mismo módulo que usa el servidor para renderizar)
+  import { espanolAChi, chiAEspanol } from "../lib/chi";
 
   // ---------- UI ----------
   let modo = "es-chi";
@@ -589,109 +586,55 @@
     ch.addEventListener("click", ()=>{ entrada.value = ch.textContent; modo="es-chi"; traducir(); escuchar(salida.textContent); });
   });
 
+  // La voz la maneja el modal 🎙️ (personaje, velocidad y tono)
   function escuchar(texto){
-    try{
-      speechSynthesis.cancel();
-      const u = new SpeechSynthesisUtterance(texto);
-      u.lang="es-ES"; u.rate=0.85; u.pitch=1.1;
-      speechSynthesis.speak(u);
-    }catch(e){ console.log(e); }
+    if (window.hablar) window.hablar(texto);
   }
-  window.escuchar = escuchar;
 
-  // expresiones de todos los días (se traducen con el mismo motor para ser 100% coherentes)
-  const expresiones = [
-    {cat:"Saludos 问候", es:"Hola, ¿cómo estás?", gesto:"🙏 reverencia + sonrisa"},
-    {cat:"Saludos 问候", es:"Buenos días", gesto:"🙏 manos juntas"},
-    {cat:"Saludos 问候", es:"Buenas noches", gesto:"🌙 voz suave + reverencia"},
-    {cat:"Saludos 问候", es:"¿Qué tal?", gesto:"👋 mano arriba, cantado"},
-    {cat:"Saludos 问候", es:"¿Qué haces?", gesto:"👀 curioso + cantado"},
-    {cat:"Despedidas 告别", es:"Adiós, nos vemos mañana", gesto:"👋 adiós con las dos manos"},
-    {cat:"Despedidas 告别", es:"Nos vemos al rato", gesto:"👋 guiño + cantado"},
-    {cat:"Despedidas 告别", es:"Cuídate mucho", gesto:"❤️ mano al corazón"},
-    {cat:"Cortesía 礼貌", es:"Gracias por todo", gesto:"🙏 reverencia profunda"},
-    {cat:"Cortesía 礼貌", es:"Por favor", gesto:"🙏 manitas juntas + voz dulce"},
-    {cat:"Cortesía 礼貌", es:"Perdón, lo siento", gesto:"🥺 manos al pecho"},
-    {cat:"Cortesía 礼貌", es:"De nada", gesto:"😊 sonrisa + reverencia corta"},
-    {cat:"Amor y amistad 爱", es:"Te quiero mucho", gesto:"❤️ manos en corazón"},
-    {cat:"Amor y amistad 爱", es:"Eres mi mejor amigo", gesto:"🤗 abrazo grande"},
-    {cat:"Amor y amistad 爱", es:"Abrazo grande", gesto:"🤗 brazos abiertos"},
-    {cat:"Familia 家族", es:"Mamá, papá, los amo", gesto:"❤️ señalar al cielo + corazón"},
-    {cat:"Familia 家族", es:"Bienvenidos a la familia", gesto:"🏮 brazos abiertos como dragón"},
-    {cat:"Familia 家族", es:"Vamos a la casa", gesto:"🏠 manos como techo"},
-    {cat:"Comida 美食", es:"Vamos a comer", gesto:"🍜 frotar la panza"},
-    {cat:"Comida 美食", es:"Qué rico está esto", gesto:"😋 beso al aire + panza"},
-    {cat:"Comida 美食", es:"Tengo hambre", gesto:"🍚 panza + cara de antojo"},
-    {cat:"Juegos 街", es:"Vamos a jugar", gesto:"⚽ saltar + cantar rápido"},
-    {cat:"Juegos 街", es:"Pásame la pelota", gesto:"⚽ manos pidiendo + gritito"},
-    {cat:"Juegos 街", es:"Me toca a mí", gesto:"☝️ señalarse + voz aguda"},
-    {cat:"Ánimo 加油", es:"Tú puedes, no te rindas", gesto:"💪 puño arriba. El 'no' es ¡chion! 👊"},
-    {cat:"Emociones 情感", es:"Estoy feliz", gesto:"🎉 brazos arriba + risa"},
-    {cat:"Emociones 情感", es:"Estoy enojado", gesto:"😠 brazos cruzados + voz grave"},
-    {cat:"Emociones 情感", es:"Qué susto me diste", gesto:"😱 manos a la cara"},
-    {cat:"Emociones 情感", es:"Qué divertido", gesto:"🤣 risa + palmas"},
-    {cat:"Fiesta 庆祝", es:"Feliz cumpleaños", gesto:"🎂 cantar + palmas"},
-    {cat:"Escuela 学校", es:"Vamos a la escuela", gesto:"🎒 mochila + marcha cantada"},
-    {cat:"Sagradas 神圣", es:"Sí, con todo el corazón", gesto:"🙏 ¡chiis! [chīís] alargado ⬆ sonrisa + reverencia"},
-    {cat:"Sagradas 神圣", es:"No, ni lo sueñes", gesto:"👊 ¡chion! [chiǒn] seco ⬇ brazos cruzados"},
-    {cat:"Sagradas 神圣", es:"¿Vienes conmigo? ¡Sí!", gesto:"🙏 pregunta cantada + respuesta ¡chiis! ⬆"},
-    {cat:"Sagradas 神圣", es:"¿Te rindes? ¡No!", gesto:"👊 pregunta grave + respuesta ¡chion! ⬇"},
-    {cat:"Dragón 龙", es:"Que el dragón te acompañe", gesto:"🐉 brazos de dragón + voz de maestro"},
-  ];
-
+  // ---------- FILTROS Y ESCUCHA DE EXPRESIONES ----------
+  // Las tarjetas ya vienen renderizadas desde el servidor (con estilos).
+  // Aquí solo filtramos, buscamos y escuchamos.
   const grid = document.getElementById("expr-grid");
   const filtrosBox = document.getElementById("filtros");
   const buscarInput = document.getElementById("buscar-expr");
   const conteo = document.getElementById("conteo-expr");
+  const vacio = document.getElementById("expr-vacio");
+  const tarjetas = grid ? Array.from(grid.querySelectorAll(".expr")) : [];
   let filtroActual = "Todas";
-  const categorias = ["Todas", ...new Set(expresiones.map(e=>e.cat))];
 
-  function desgloseChi(es){
-    // muestra palabra por palabra: original → chi (para aprender)
-    return es.split(/(\s+)/).map(chunk=>{
-      if(/^\s+$/.test(chunk)) return " ";
-      const limpio = chunk.replace(/[^A-Za-zÁÉÍÓÚÜÑñáéíóúü]/g,"");
-      if(!limpio) return chunk;
-      const chi = espanolAChi(limpio);
-      if(limpio.toLowerCase()===chi.toLowerCase()) return chunk;
-      return `${limpio}→${chi}`;
-    }).join(" ");
-  }
-
-  function pintarFiltros(){
-    filtrosBox.innerHTML="";
-    categorias.forEach(c=>{
-      const b=document.createElement("button");
-      b.className="filtro"+(c===filtroActual?" activo":"");
-      b.textContent=c;
-      b.addEventListener("click",()=>{filtroActual=c;pintarFiltros();pintarExpr();});
-      filtrosBox.appendChild(b);
+  function filtrar(){
+    const q = (buscarInput?.value || "").toLowerCase().trim();
+    let n = 0;
+    tarjetas.forEach((c) => {
+      const cat = c.getAttribute("data-cat") || "";
+      const txt = c.getAttribute("data-busca") || "";
+      const ok = (filtroActual === "Todas" || cat === filtroActual) && (!q || txt.includes(q));
+      c.style.display = ok ? "" : "none";
+      if (ok) n++;
     });
+    if (vacio) vacio.hidden = n > 0;
+    if (conteo) conteo.textContent = `${n} expresiones en Chi`;
   }
 
-  function pintarExpr(){
-    const q=(buscarInput.value||"").toLowerCase().trim();
-    grid.innerHTML="";
-    let n=0;
-    expresiones.forEach(e=>{
-      if(filtroActual!=="Todas" && e.cat!==filtroActual) return;
-      const chi = espanolAChi(e.es);
-      if(q && !(e.es.toLowerCase().includes(q)||chi.toLowerCase().includes(q))) return;
-      n++;
-      const div = document.createElement("div");
-      div.className="expr";
-      const des = desgloseChi(e.es);
-      div.innerHTML = `<small>${e.cat}</small><div class="es">${e.es}</div><div class="ch">${chi}</div><div class="des">🔍 ${des}</div><div class="gesto">🎭 ${e.gesto}</div><button>🔊 Escuchar</button>`;
-      div.querySelector("button").addEventListener("click", ()=>escuchar(chi));
-      grid.appendChild(div);
-    });
-    conteo.textContent = `${n} expresiones en Chi`;
-    if(n===0) grid.innerHTML = `<p style="opacity:.8">😅 Chion... no encontramos nada. Prueba con “hola” o “gracias”.</p>`;
-  }
-  buscarInput.addEventListener("input", pintarExpr);
-  pintarFiltros(); pintarExpr();
+  filtrosBox?.addEventListener("click", (ev) => {
+    const b = (ev.target as HTMLElement | null)?.closest(".filtro") as HTMLElement | null;
+    if (!b) return;
+    filtroActual = b.getAttribute("data-cat") || "Todas";
+    filtrosBox.querySelectorAll(".filtro").forEach((x) => x.classList.toggle("activo", x === b));
+    filtrar();
+  });
+
+  buscarInput?.addEventListener("input", filtrar);
+
+  grid?.addEventListener("click", (ev) => {
+    const b = (ev.target as HTMLElement | null)?.closest("button.say") as HTMLElement | null;
+    if (b) escuchar(b.getAttribute("data-tx") || "");
+  });
+
+  filtrar();
 
   traducir();
 </script>
+<Habla />
 </body>
 </html>
